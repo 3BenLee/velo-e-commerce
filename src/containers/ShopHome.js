@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ButtonAppBar from '../components/ButtonAppBar';
 import ItemCard from './ItemCard';
+import { Route } from 'react-router-dom';
+// import CardWrapper from '../components/CardWrapper';
 
 const styles = {
   wrapper: {
@@ -39,13 +41,37 @@ class ShopHome extends Component {
     return (
       <div>
         <ButtonAppBar />
-        <div style={styles.wrapper}>
-          {cards}
-        </div>
-        {/* <ItemCard /> */}
+        <Route 
+          // Maybe I need to add "/" to the route path???
+          path="" 
+          exact 
+          render={ () => 
+            <div style={styles.wrapper}>
+              {cards}
+            </div>
+          }
+        />
       </div>
     )
   }
 }
+
+//     return (
+//       <div>
+//         <ButtonAppBar />
+//         <Route 
+//           // Maybe I need to add "/" to the route path???
+//           path="" 
+//           exact 
+//           render={ () => 
+//             <CardWrapper>
+//               {cards}
+//             </CardWrapper> 
+//           }
+//         />
+//       </div>
+//     )
+//   }
+// }
 
 export default ShopHome;
