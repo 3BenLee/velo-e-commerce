@@ -13,7 +13,7 @@ import { withRouter } from 'react-router';
 
 const styles = theme => ({
   card: {
-    maxWidth: "calc(33% - 40px)",
+    // maxWidth: "calc(33% - 40px)",
     marginTop: 120,
     marginLeft: 20,
     marginRight: 20
@@ -29,10 +29,6 @@ const styles = theme => ({
 
 class ItemCard extends Component {
 
-  ShowItemDetailHandler = (id) => {
-    this.props.history.push(`detail/${this.props.id}`)
-  }
-
   render() {
     
     const { classes } = this.props;
@@ -40,7 +36,8 @@ class ItemCard extends Component {
     return (
       <Card 
         className={classes.card}
-        onClick={this.ShowItemDetailHandler}>
+        onClick={this.props.clicked}
+        >
         <CardHeader
           action={
             <IconButton>

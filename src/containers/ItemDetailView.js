@@ -39,10 +39,11 @@ class ItemDetailView extends Component {
       .then(response => {
         let data = Object.values(response.data)
         console.log('##', data)
-        data.map((val) => {
+        data.map((match) => {
           if (String(data.id) === this.props.match.params.id) {
-            this.setState({cards: val});
+            this.setState({cards: match});
           }
+          console.log("^",this.props)
           return null;
         })
       });
