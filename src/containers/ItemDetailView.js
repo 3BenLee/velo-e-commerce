@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,14 +8,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCartIcon from '../components/ShoppingCartAddIcon';
-import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   card: {
-    maxWidth: "calc(33% - 40px)",
+    maxWidth: "90%",
     marginTop: 120,
     marginLeft: 20,
     marginRight: 20
@@ -25,37 +24,34 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  }
 });
 
 class ItemDetailView extends Component {
 
   state = {
-    expanded: false
+    pathId: null,
+    cards: null 
   }
-  
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
+
+  componentDidMount () {
+    axios.get('https://velo-velo.firebaseio.com/.json')
+      .then(response => {
+        let data = Object.values(response.data)
+        console.log('##', data)
+        data.map((val) => {
+          if (String(data.id) === this.props.match.params.id) {
+            this.setState({cards: val});
+          }
+          return null;
+        })
+      });
+  }
+  // Object.values
+  // this.props.match.params.id
 
   render() {
-    
+    console.log('***', this.state.cards)
     const { classes } = this.props;
 
     return (
@@ -66,7 +62,7 @@ class ItemDetailView extends Component {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={this.props.title}
+            title={this.state.cards}
           />
           <CardMedia
             className={classes.media}

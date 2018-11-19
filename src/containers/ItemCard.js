@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCartIcon from '../components/ShoppingCartAddIcon';
-import ItemDetailView from './ItemDetailView';
+import { withRouter } from 'react-router';
 
 const styles = theme => ({
   card: {
@@ -24,28 +24,13 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
   }
 });
 
-class ItemCard extends React.Component {
+class ItemCard extends Component {
 
-  state = {
-    ItemDetailView: []
-  }
-
-  ShowItemDetailHandler = () => {
-    // console.log('was clicked!');
-    this.setState(ItemDetailView)
+  ShowItemDetailHandler = (id) => {
+    this.props.history.push(`detail/${this.props.id}`)
   }
 
   render() {
@@ -87,4 +72,4 @@ ItemCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ItemCard);
+export default withRouter(withStyles(styles)(ItemCard));
