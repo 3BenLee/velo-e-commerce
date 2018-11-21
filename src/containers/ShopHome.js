@@ -49,10 +49,9 @@ class ShopHome extends Component {
     });
 
     return (
-     
-          <div style={styles.wrapper}>
-            {cards}
-          </div>
+      <div style={styles.wrapper}>
+        {cards}
+      </div>
     )
   }
 }

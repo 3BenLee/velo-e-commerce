@@ -7,7 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import CartIcon from './ShoppingCartIcon'
+// import CartIcon from './ShoppingCartIcon';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
 const styles = {
   root: {
@@ -38,7 +40,10 @@ function ButtonAppBar(props) {
             Velo-Velo
           </Typography>
           <Button color="inherit">Login</Button>
-          <CartIcon/>
+          <SvgIcon>
+            <ShoppingCart onClick={props.click} />
+          </SvgIcon>
+          {/* <CartIcon />  */}
         </Toolbar>
       </AppBar>
     </div>

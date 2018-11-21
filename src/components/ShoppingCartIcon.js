@@ -1,13 +1,13 @@
-import React from 'react';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
+// import React from 'react';
+// import SvgIcon from '@material-ui/core/SvgIcon';
+// import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
-function CartIcon () {
-  return (
-    <SvgIcon>
-      <ShoppingCart/>
-    </SvgIcon>
-  )
-}
+// function CartIcon (props) {
+//   return (
+//     <SvgIcon>
+//       <ShoppingCart onClick={props.clicked} />
+//     </SvgIcon>
+//   )
+// }
 
-export default CartIcon;
+// export default CartIcon;

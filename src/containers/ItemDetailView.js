@@ -39,16 +39,19 @@ class ItemDetailView extends Component {
       .then(response => {
         let data = Object.values(response.data)
         console.log('##', data)
-        data.map((match) => {
-          if (String(data.id) === this.props.match.params.id) {
-            this.setState({cards: match});
+        data.map((item) => {
+          if (data.id === this.props.match.params.id) {
+            this.setState({cards: item});
           }
-          console.log("^",this.props)
+          // console.log("^",this.state.cards.id) // = So line 43 is undefined??? So we can't get the data.
+          console.log('$', this.props.match.params.id) // this is working!
+          // console.log(state.cards)
           return null;
         })
       });
   }
-  // Object.values
+  // String(data.id)  line 43
+  // Object.values    
   // this.props.match.params.id
 
   render() {
