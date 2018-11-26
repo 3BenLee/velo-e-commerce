@@ -33,42 +33,32 @@ class ShopHome extends Component {
   //     });
   // }
 
-  // ShowItemDetailHandler = (id) => {
-  //   this.props.history.push(`detail/${this.props.id}`)
-  // }
+  ShowItemDetailHandler = (id) => {
+    this.props.history.push(`detail/${this.props.id}`)
+  }
   
   render() {
-    // changed this.state.cards to this.props.cards because I'm using redux
-    let cards = this.props.cards ? <p>Ingredients can't be loaded!</p> : <ItemCard />;
-
-    if (cards === this.props.cards ){
-      const cards = Object.values(cards).map(cards => {
-      
-        return (
-          <Link to={'/detail/' + cards.id} key={cards.id}>
+    let cards;
+    if ( this.props.cards ) {
+        cards = Object.values(this.props.cards).map( card => (
+          <Link to={'/detail/' + card.id} key={card.id}>
             <ItemCard 
-            key={cards.title}
-            id={cards.id} 
-            title={cards.title}
-            price={cards.price}
-            image={cards.img} 
-            description={cards.description}
-            clicked={() => this.ShowItemDetailHandler(cards.id)}
+            key={card.id}
+            id={card.id} 
+            title={card.title}
+            price={card.price}
+            image={card.img} 
+            description={card.description}
+            clicked={() => this.ShowItemDetailHandler(card.id)}
             />
-          </Link>)
-      });
-      
+          </Link>
+        ) )
     }
     return (
-      <div style={styles.wrapper}>
-        {cards}
-      </div>
-    )
-    
-
-    
-  
-
+        <div>
+            {cards}
+        </div>
+    );
   }
 }
 
@@ -76,8 +66,6 @@ const mapStateToProps = state => {
   console.log("map props to state")
   console.log("----->",state.data.cardData)
   return {
-    // state is received in the form of props
-   
     cards: state.data.cardData
   };
 

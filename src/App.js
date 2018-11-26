@@ -4,7 +4,6 @@ import './App.css';
 import ShopHome from './containers/ShopHome';
 import ButtonAppBar from './components/ButtonAppBar';
 import ItemDetailView from './containers/ItemDetailView';
-import Trigger from './containers/CartModal';
 
 class App extends Component {
 
@@ -12,7 +11,6 @@ class App extends Component {
     return (
       <div>
         <ButtonAppBar click={this.handleOpen} />
-        <Trigger />
         <Route exact path="/" component={ShopHome} />
         <Route exact path="/detail/:id" component={ItemDetailView} />
       </div>

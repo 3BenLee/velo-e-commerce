@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -29,33 +28,8 @@ const styles = theme => ({
 
 class ItemDetailView extends Component {
 
-  state = {
-    pathId: null,
-    cards: null 
-  }
-
-  componentDidMount () {
-    axios.get('https://velo-velo.firebaseio.com/.json')
-      .then(response => {
-        let data = Object.values(response.data)
-        console.log('##', data)
-        data.map((item) => {
-          if (data.id === this.props.match.params.id) {
-            this.setState({cards: item});
-          }
-          // console.log("^",this.state.cards.id) // = So line 43 is undefined??? So we can't get the data.
-          console.log('$', this.props.match.params.id) // this is working!
-          // console.log(state.cards)
-          return null;
-        })
-      });
-  }
-  // String(data.id)  line 43
-  // Object.values    
-  // this.props.match.params.id
-
   render() {
-    console.log('***', this.state.cards)
+
     const { classes } = this.props;
 
     return (
@@ -66,7 +40,7 @@ class ItemDetailView extends Component {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={this.state.cards}
+            title={this.props.cards}
           />
           <CardMedia
             className={classes.media}

@@ -11,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCartIcon from '../components/ShoppingCartAddIcon';
 import { withRouter } from 'react-router';
 
-const styles = theme => ({
+const styles = () => ({
   card: {
     // maxWidth: "calc(33% - 40px)",
     marginTop: 120,
