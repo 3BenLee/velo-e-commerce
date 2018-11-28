@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { fetchMerch } from '../actions/fetchMerchAction';
 // import axios from 'axios';
 import ItemCard from './ItemCard';
+import {fetchUniqueMerch} from '../actions/fetchUniqueMerchAction';
+//import classes from '*.module.scss';
 
 const styles = {
   wrapper: {
@@ -16,24 +18,13 @@ const styles = {
 class ShopHome extends Component {
 
   componentDidMount() {
-    this.props.fetchMerch();
-    console.log('%', this.props.cards);
+    this.props.onInitMerch();
+    // console.log('%', this.props.cards);
   }
 
-  // state = {
-  //   cards: []
-  // }
-
-  // componentDidMount () {
-  //   axios.get('https://velo-velo.firebaseio.com/.json')
-  //     .then(response => {
-  //       this.setState({cards: response.data});
-  //       console.log('&', response);
-  //       console.log("#", this.props)
-  //     });
-  // }
-
   ShowItemDetailHandler = (id) => {
+    // console.log("*",id);
+    this.props.onInitUniqueMerch(id);
     this.props.history.push(`detail/${this.props.id}`)
   }
   
@@ -55,21 +46,29 @@ class ShopHome extends Component {
         ) )
     }
     return (
-        <div>
-            {cards}
-        </div>
+      <div style={styles.wrapper}>
+        {cards}
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log("map props to state")
-  console.log("----->",state.data.cardData)
+  // console.log("map props to state")
+  // console.log("----->",state.data.cardData)
   return {
-    cards: state.data.cardData
+    cards: state.data.cardData,
+    id: state.data.cardData
   };
 
 }
 
-// below in connect you can define which slices of the state you want 
-export default connect(mapStateToProps,{ fetchMerch })(ShopHome);
+const mapDispatchToProps = dispatch => {
+  return {
+    onInitMerch: () => dispatch(fetchMerch()),
+    onInitUniqueMerch: (id) => dispatch(fetchUniqueMerch(id))
+  };
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ShopHome);

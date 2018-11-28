@@ -4,8 +4,6 @@ import { FETCH_MERCH } from './types';
 export const fetchMerch = () => dispatch => {
   console.log('fetching');
   fetch('https://velo-velo.firebaseio.com/.json',{
-    // mode:'cors',
-    // headers:'Access-Control-Allow-Origin'
   })
   .then(res => res.json())
   .then(cardData => dispatch({
@@ -13,3 +11,4 @@ export const fetchMerch = () => dispatch => {
     payload: cardData
   }));
 }
+

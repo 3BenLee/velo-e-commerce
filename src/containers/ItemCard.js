@@ -14,7 +14,7 @@ import { withRouter } from 'react-router';
 const styles = () => ({
   card: {
     // maxWidth: "calc(33% - 40px)",
-    marginTop: 120,
+    marginTop: 100,
     marginLeft: 20,
     marginRight: 20
   },
