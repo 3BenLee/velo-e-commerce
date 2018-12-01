@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -69,4 +70,11 @@ ItemCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(ItemCard));
+const mapStateToProps = () => {
+  return {
+   
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(withStyles(styles)(ItemCard)));
+

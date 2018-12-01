@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchMerch } from '../actions/fetchMerchAction';
-// import axios from 'axios';
+import { fetchUniqueMerch } from '../actions/fetchUniqueMerchAction';
 import ItemCard from './ItemCard';
-import {fetchUniqueMerch} from '../actions/fetchUniqueMerchAction';
 //import classes from '*.module.scss';
 
 const styles = {

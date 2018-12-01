@@ -2,7 +2,7 @@ import { FETCH_MERCH } from './types';
 // import axios from 'axios';
 
 export const fetchMerch = () => dispatch => {
-  console.log('fetching');
+  // console.log('fetching');
   fetch('https://velo-velo.firebaseio.com/.json',{
   })
   .then(res => res.json())

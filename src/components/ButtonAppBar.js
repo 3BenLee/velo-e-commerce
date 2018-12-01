@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import SimpleModalWrapped from '../containers/CartModal';
 
 const styles = {
   root: {
@@ -23,10 +25,12 @@ const styles = {
   appBar: {
     marginBottom: 50,
   }
-};
+}; 
 
 function ButtonAppBar(props) {
+  
   const { classes } = props;
+
   return (
     <div className={classes.root}>
       <AppBar style={styles.appBar} position="static">
@@ -34,13 +38,19 @@ function ButtonAppBar(props) {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            Velo-Velo
-          </Typography>
+          <Link to="/">
+            <Typography 
+              variant="h6" 
+              color="inherit" 
+              className={classes.grow}>
+              Velo-Velo
+            </Typography>
+          </Link>
           <Button color="inherit">Login</Button>
-          <SvgIcon>
-            <ShoppingCart onClick={props.click} />
-          </SvgIcon>
+          {/* <SvgIcon>
+            <ShoppingCart onClick={props.cartClick} />
+          </SvgIcon> */}
+          <SimpleModalWrapped />
           {/* <CartIcon />  */}
         </Toolbar>
       </AppBar>

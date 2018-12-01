@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ButtonAppBar click={this.handleOpen} />
+        <ButtonAppBar />
         <Route exact path="/" component={ShopHome} />
         <Route exact path="/detail/:id" component={ItemDetailView} />
       </div>

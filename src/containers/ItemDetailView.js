@@ -73,9 +73,9 @@ ItemDetailView.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log("map props to state")
-  console.log(state)
-  console.log("----->",state.data.cardData)
+  // console.log("map props to state")
+  // console.log(state)
+  // console.log("----->",state.data.cardData)
   if (!state.data.cardData) {
     return {
       title: null,
