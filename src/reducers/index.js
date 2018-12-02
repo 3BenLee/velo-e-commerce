@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 import fetchMerchReducer from './fetchMerchReducer';
 import fetchUniqueMerchReducer from './fetchUniqueMerchReducer';
-import totalMerchReducer from './totalMerchReducer';
-// import {fetchUniqueMerch} from '../actions/fetchUniqueMerchAction'
+import addToCartReducer from './addToCartReducer';
 
 export default combineReducers({
   data: fetchMerchReducer,
   card: fetchUniqueMerchReducer,
-  total: totalMerchReducer
-  // id: fetchUniqueMerchReducer
+  total: addToCartReducer
 })

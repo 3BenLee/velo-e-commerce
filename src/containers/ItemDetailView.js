@@ -9,7 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AddCartIcon from '../components/ShoppingCartAddIcon';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
+import {addToCart} from '../actions/addToCart'
 
 const styles = () => ({
   card: {
@@ -28,6 +30,11 @@ const styles = () => ({
 });
 
 class ItemDetailView extends Component {
+
+  addToCartHandler = () => {
+    // this.props.addToCart();
+    console.log('++');
+  }
 
   render() {
     const { classes } = this.props;
@@ -61,7 +68,9 @@ class ItemDetailView extends Component {
           <Typography component="p">
             ${this.props.price}
           </Typography>
-          <AddCartIcon />
+          <SvgIcon onClick={() => this.addToCartHandler()} >
+            <AddShoppingCart />
+          </SvgIcon>
         </CardContent>
       </Card>
     );
@@ -91,7 +100,6 @@ const mapStateToProps = state => {
     description: card.description,
     price: card.price
   };
-
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(ItemDetailView));
+export default connect(mapStateToProps, { addToCart })(withStyles(styles)(ItemDetailView));

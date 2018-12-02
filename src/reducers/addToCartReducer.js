@@ -1,18 +1,19 @@
-import { TOTAL_MERCH } from '../actions/types';
+import {ADD_TO_CART} from '../actions/types'
+
 
 const initialState = {
   cards: [],
   id: '',
-  totalPrice: ''
+  items: []
 }
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    case TOTAL_MERCH:
+    case ADD_TO_CART:
     console.log('TOTAL_reducer');
       return {
         ...state,
-        totalPrice: state.totalPrice + action.payload
+        items: action.payload
       }
     default:
       return state;
