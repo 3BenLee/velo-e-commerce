@@ -2,8 +2,7 @@ import { FETCH_UNIQUE_MERCH } from '../actions/types';
 
 const initialState = {
   cards: [],
-  id: '',
-  totalPrice: ''
+  id: ''
 }
 
 export default function(state = initialState, action) {

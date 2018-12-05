@@ -6,5 +6,5 @@ import addToCartReducer from './addToCartReducer';
 export default combineReducers({
   data: fetchMerchReducer,
   card: fetchUniqueMerchReducer,
-  total: addToCartReducer
+  shoppingCart: addToCartReducer
 })

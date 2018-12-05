@@ -32,7 +32,7 @@ const styles = () => ({
 class ItemDetailView extends Component {
 
   addToCartHandler = () => {
-    // this.props.addToCart();
+    this.props.addToCart(this.props.card)
     console.log('++');
   }
 
@@ -95,6 +95,7 @@ const mapStateToProps = state => {
   }
   const card = state.data.cardData[state.card.id]
   return {
+    card: card,
     title: card.title,
     img: card.img,
     description: card.description,
