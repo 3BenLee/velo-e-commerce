@@ -10,7 +10,7 @@ const styles = {
   wrapper: {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   } 
 }
 
@@ -18,7 +18,6 @@ class ShopHome extends Component {
 
   componentDidMount() {
     this.props.onInitMerch();
-    // console.log('%', this.props.cards);
   }
 
   ShowItemDetailHandler = (id) => {
@@ -31,9 +30,9 @@ class ShopHome extends Component {
     let cards;
     if ( this.props.cards ) {
         cards = Object.values(this.props.cards).map( card => (
-          <Link to={'/detail/' + card.id} key={card.id}>
+          <Link to={'/detail/' + card.id + card.key} key={card.id}>
             <ItemCard 
-            key={card.id}
+            key={card.id + new Date().getTime()} 
             id={card.id} 
             title={card.title}
             price={card.price}

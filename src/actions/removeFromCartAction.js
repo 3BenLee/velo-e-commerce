@@ -1,9 +1,17 @@
 import { REMOVE_FROM_CART } from './types';
 
-export const removeFromCart = (item) => dispatch => {
-  console.log('Remover_Action', item);
-  dispatch({
+export const removeFromCart = (card) => {
+  console.log('Remover_Action', card);
+  return {
     type: REMOVE_FROM_CART,
-    payload: item
-  }) 
+    payload: card
+  } 
 }
+
+// export const removeFromCart = (card) => dispatch => {
+//   console.log('REMOVER_ACTION', card);
+//   dispatch({
+//     type: REMOVE_FROM_CART,
+//     payload: card
+//   }) 
+// }

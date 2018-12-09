@@ -1,4 +1,5 @@
-import {ADD_TO_CART} from '../actions/types'
+import {ADD_TO_CART} from '../actions/types';
+import {REMOVE_FROM_CART} from '../actions/types';
 
 const initialState = {
   cards: [],
@@ -9,11 +10,17 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
     case ADD_TO_CART:
-    console.log('TOTAL_reducer');
+    console.log('ADD_reducer');
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload]
       }
+    case REMOVE_FROM_CART:
+    console.log('REMOVE_reducer');
+    return {
+      ...state,
+      cartItems: state.cartItems.filter(item => action.payload !== item)
+    }
     default:
       return state;
   }

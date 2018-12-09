@@ -15,24 +15,26 @@ import { removeFromCart } from '../actions/removeFromCartAction';
 
 
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+// function getModalStyle() {
+//   const top = 50 + rand();
+//   const left = 50 + rand();
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`,
+//     transform: `translate(-${top}%, -${left}%)`,
+//   };
+// }
 
 const styles = theme => ({
   paper: {
     position: 'absolute',
+    top: '50%',
+    left: '25%',
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
@@ -54,8 +56,9 @@ class SimpleModal extends React.Component {
     this.setState({ open: false });
   };
 
-  removeFromCartHandler = () => {
+  removeFromCartHandler = (id) => {
     this.props.removeFromCart(this.props.card)
+    console.log("RemoveHandler",id)
   }
 
   render() {
@@ -71,7 +74,7 @@ class SimpleModal extends React.Component {
           <Button 
             variant="outlined" 
             className={classes.button} 
-            onClick={() => this.removeFromCartHandler(this.props.card)} >
+            onClick={() => this.removeFromCartHandler(merch.id)} >
             Remove
           </Button>
           </TableCell>
@@ -98,7 +101,7 @@ class SimpleModal extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
         >
-          <div style={getModalStyle()} className={classes.paper}>
+          <div className={classes.paper}>
             <Typography variant="h6" id="modal-title">
               My Cart
             </Typography>
@@ -120,29 +123,37 @@ class SimpleModal extends React.Component {
 }
 
 const mapStateToProps = state => {
-  // console.log("map props to state")
-  // console.log(state)
-  // console.log("----->",state.data.cardData)
+  console.log("$&",state.card.id)
+  console.log("----->",state.data.cardData)
   if (!state.data.cardData) {
     return {
       title: null,
+      id: null,
       img: null,
       description: null,
       price: null
     }
   }
+
   const card = state.data.cardData[state.card.id]
+  //const cartItems = state.shoppingCart[state.card.id]
   return {
     card: card,
-    cartItems: state.shoppingCart.cartItems
+    cartItems: state.shoppingCart.cartItems,
+    id: state.card.id
     // title: card.title,
+    // id: card.id,
     // img: card.img,
     // description: card.description,
     // price: card.price
   };
 }
+const mapDispatchToProps = (dispatch) => ({
+  removeFromCart: (id) => dispatch(removeFromCart(id))
+})
 
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
 
-export default connect(mapStateToProps, { removeFromCart })(withStyles(styles)(SimpleModalWrapped));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModalWrapped));
 
+// export default withStyles(styles)(SimpleModalWrapped);

@@ -13,18 +13,18 @@ import { withRouter } from 'react-router';
 
 const styles = () => ({
   card: {
-    // maxWidth: "calc(33% - 40px)",
+    // maxWidth: "calc(100% - 40px)",
     marginTop: 100,
     marginLeft: 20,
     marginRight: 20
   },
   media: {
-    height: 0,
+    height: '40vh',
     paddingTop: '56.25%', // 16:9
   },
-  actions: {
-    display: 'flex',
-  }
+  // actions: {
+  //   display: 'flex',
+  // }
 });
 
 class ItemCard extends Component {

@@ -97,6 +97,7 @@ const mapStateToProps = state => {
   return {
     card: card,
     title: card.title,
+    id: card.id,
     img: card.img,
     description: card.description,
     price: card.price
