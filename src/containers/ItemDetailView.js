@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
-import {addToCart} from '../actions/addToCart'
+import { addToCart } from '../actions/addToCart';
 
 const styles = () => ({
   card: {
@@ -32,8 +32,8 @@ const styles = () => ({
 class ItemDetailView extends Component {
 
   addToCartHandler = () => {
-    this.props.addToCart(this.props.card)
-    console.log('++');
+    this.props.addToCart(this.props.card);
+    console.log('++', this.props.quantity);
   }
 
   render() {
@@ -59,7 +59,7 @@ class ItemDetailView extends Component {
         <CardMedia
           className={classes.media}
           image={"/" + this.props.img}
-          title="Paella dish"
+          title={this.props.title + ' image'}
         />
         <CardContent>
           <Typography component="p">
@@ -100,7 +100,8 @@ const mapStateToProps = state => {
     id: card.id,
     img: card.img,
     description: card.description,
-    price: card.price
+    price: card.price,
+    quantity: 0
   };
 }
 

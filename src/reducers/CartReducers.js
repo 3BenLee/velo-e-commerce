@@ -4,7 +4,7 @@ import {REMOVE_FROM_CART} from '../actions/types';
 const initialState = {
   cards: [],
   id: '',
-  cartItems: []
+  cartItems: [],
 }
 
 export default function(state = initialState, action) {
@@ -13,14 +13,14 @@ export default function(state = initialState, action) {
     console.log('ADD_reducer');
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload]
+        cartItems: [...state.cartItems, action.payload],
       }
     case REMOVE_FROM_CART:
-    console.log('REMOVE_reducer');
-    return {
-      ...state,
-      cartItems: state.cartItems.filter(item => action.payload !== item)
-    }
+    console.log('REMOVE_REDUCER', action.payload, state.cartItems);
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(item => item.id !== action.payload.id)
+      }
     default:
       return state;
   }

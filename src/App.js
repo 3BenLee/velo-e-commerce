@@ -9,7 +9,6 @@ import ItemDetailView from './containers/ItemDetailView';
 const styles = {
   pageWrapper: {
     height: '100vh',
-    backgroundColor: 'grey'
   } 
 }
 

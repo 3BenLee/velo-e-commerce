@@ -8,10 +8,12 @@ export const addToCart = (card) => dispatch => {
   }) 
 }
 
-// export const addToCart = (card) => {
-//   console.log('TOTAL', card);
-//   return {
-//     type: ADD_TO_CART,
-//     payload: card
-//   } 
-// }
+export const test = {
+  addToCart: (card) => {
+    console.log('TOTAL', card);
+    return {
+      type: ADD_TO_CART,
+      payload: card
+    } 
+  }
+}

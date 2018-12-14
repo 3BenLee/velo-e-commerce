@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchMerch } from '../actions/fetchMerchAction';
 import { fetchUniqueMerch } from '../actions/fetchUniqueMerchAction';
 import ItemCard from './ItemCard';
+import shortid from 'shortid';
 //import classes from '*.module.scss';
 
 const styles = {
@@ -30,9 +31,9 @@ class ShopHome extends Component {
     let cards;
     if ( this.props.cards ) {
         cards = Object.values(this.props.cards).map( card => (
-          <Link to={'/detail/' + card.id + card.key} key={card.id}>
+          <Link to={'/detail/' + card.id + card.key} key={`div-${shortid.generate()}`}>
             <ItemCard 
-            key={card.id + new Date().getTime()} 
+            key={card.id + shortid.generate()} 
             id={card.id} 
             title={card.title}
             price={card.price}

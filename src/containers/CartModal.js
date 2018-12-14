@@ -6,36 +6,19 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { removeFromCart } from '../actions/removeFromCartAction';
-
-
-
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
-
-// function getModalStyle() {
-//   const top = 50 + rand();
-//   const left = 50 + rand();
-
-//   return {
-//     top: `${top}%`,
-//     left: `${left}%`,
-//     transform: `translate(-${top}%, -${left}%)`,
-//   };
-// }
+import { uniqBy } from 'lodash';
 
 const styles = theme => ({
   paper: {
     position: 'absolute',
     top: '50%',
     left: '25%',
-    width: theme.spacing.unit * 50,
+    // width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -45,7 +28,7 @@ const styles = theme => ({
 class SimpleModal extends React.Component {
   
   state={
-    open: false
+    open: false,
   }
 
   handleOpen = () => {
@@ -56,9 +39,29 @@ class SimpleModal extends React.Component {
     this.setState({ open: false });
   };
 
-  removeFromCartHandler = (id) => {
-    this.props.removeFromCart(this.props.card)
-    console.log("RemoveHandler",id)
+  getUniqueItems = () => {
+    const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
+    const uniqueItems = initailUniqueItemsArray.map( ( uniqueItem ) => {
+      const quantity = this.props.cartItems.reduce( ( accumulator, cartItem ) => {
+        if ( uniqueItem.id === cartItem.id ) {
+          accumulator++;
+        }
+        return accumulator;
+      }, 0);
+      return {
+        id: uniqueItem.id,
+        title: uniqueItem.title,
+        price: uniqueItem.price,
+        quantity
+      }
+    })
+    return uniqueItems
+  };
+
+  removeFromCartHandler = (cartItem) => {
+    this.props.onRemove(cartItem)
+    console.log("RemoveHandler", cartItem)
+    //console.log("RemoveHandler",id)
   }
 
   render() {
@@ -66,15 +69,18 @@ class SimpleModal extends React.Component {
 
     let items;
     if ( this.props.cartItems ) {
-      items = this.props.cartItems.map( merch => (
+      //console.log('compare!',this.getUniqueItems(), this.props.cartItems)
+      const finalUniqueItems = this.getUniqueItems();
+      items = finalUniqueItems.map( merch => (
         <TableRow key={merch.id} >
           <TableCell>{merch.title}</TableCell>
           <TableCell>{merch.price}</TableCell>
+          <TableCell>{merch.quantity}</TableCell>
           <TableCell>
           <Button 
             variant="outlined" 
             className={classes.button} 
-            onClick={() => this.removeFromCartHandler(merch.id)} >
+            onClick={() => this.removeFromCartHandler(merch)} >
             Remove
           </Button>
           </TableCell>
@@ -124,7 +130,7 @@ class SimpleModal extends React.Component {
 
 const mapStateToProps = state => {
   console.log("$&",state.card.id)
-  console.log("----->",state.data.cardData)
+  // console.log("----->",state.data.cardData)
   if (!state.data.cardData) {
     return {
       title: null,
@@ -136,24 +142,19 @@ const mapStateToProps = state => {
   }
 
   const card = state.data.cardData[state.card.id]
-  //const cartItems = state.shoppingCart[state.card.id]
   return {
     card: card,
     cartItems: state.shoppingCart.cartItems,
-    id: state.card.id
-    // title: card.title,
-    // id: card.id,
-    // img: card.img,
-    // description: card.description,
-    // price: card.price
+    id: state.card.id,
+
   };
 }
-const mapDispatchToProps = (dispatch) => ({
-  removeFromCart: (id) => dispatch(removeFromCart(id))
-})
+const mapDispatchToProps = (dispatch) => {
+  return{
+    onRemove: (merch) => dispatch(removeFromCart(merch)) 
+  }
+}
 
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModalWrapped));
-
-// export default withStyles(styles)(SimpleModalWrapped);

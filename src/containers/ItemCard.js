@@ -49,7 +49,7 @@ class ItemCard extends Component {
         <CardMedia
           className={classes.media}
           image={this.props.image}
-          title="Paella dish"
+          title={this.props.title + ' image'}
         />
         <CardContent>
           <Typography component="p">
