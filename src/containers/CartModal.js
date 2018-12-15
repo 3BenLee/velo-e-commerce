@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class SimpleModal extends React.Component {
   
-  state={
+  state = {
     open: false,
   }
 
