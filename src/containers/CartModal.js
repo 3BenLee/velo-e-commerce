@@ -1,17 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { removeFromCart } from '../actions/removeFromCartAction';
 import { uniqBy } from 'lodash';
+import {REMOVE_FROM_CART} from '../actions/types';
+import getTotal from '../helpers/getTotal';
+
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
+
+// function getModalStyle() {
+//   const top = 50 + rand();
+//   const left = 50 + rand();
+
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`,
+//     transform: `translate(-${top}%, -${left}%)`,
+//   };
+// }
 
 const styles = theme => ({
   paper: {
@@ -27,17 +46,17 @@ const styles = theme => ({
 
 class SimpleModal extends React.Component {
   
-  state = {
-    open: false,
-  }
+  // state={
+  //   open: true,
+  // }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+  // handleOpen = () => {
+  //   this.setState({ open: true });
+  // };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  // handleClose = () => {
+  //   this.setState({ open: false });
+  // };
 
   getUniqueItems = () => {
     const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
@@ -89,23 +108,22 @@ class SimpleModal extends React.Component {
 
     let total;
     if ( this.props.cartItems ) {
-      total = (this.props.cartItems).reduce(function (accumulator, item) {
-        return accumulator + item.price;
-      }, 0);}
+      total = getTotal(this.props.cartItems)
+    }
 
     return (
  
       <div>
-        <Button onClick={this.handleOpen}>
+        {/* <Button onClick={this.handleOpen}>
           <SvgIcon>
             <ShoppingCart />
           </SvgIcon>
-        </Button>
+        </Button> */}
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={this.props.open}
+          onClose={this.props.handleClose}
         >
           <div className={classes.paper}>
             <Typography variant="h6" id="modal-title">
@@ -120,6 +138,11 @@ class SimpleModal extends React.Component {
                 </TableRow>
             </TableBody>
             </Table>
+            <Link to='/checkout'>
+              <Button>
+                Checkout
+              </Button>
+            </Link>
             <SimpleModalWrapped />
           </div>
         </Modal>
@@ -155,6 +178,8 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModalWrapped));
+

@@ -8,7 +8,7 @@ export const fetchMerch = () => dispatch => {
   .then(res => res.json())
   .then(cardData => dispatch({
     type: FETCH_MERCH,
-    payload: cardData
+    payload: cardData.products
   }));
 }
 

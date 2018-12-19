@@ -1,10 +1,12 @@
 import {ADD_TO_CART} from '../actions/types';
 import {REMOVE_FROM_CART} from '../actions/types';
+import {TOTAL_CART} from '../actions/types';
 
 const initialState = {
   cards: [],
   id: '',
   cartItems: [],
+  cartTotal: 0
 }
 
 export default function(state = initialState, action) {
