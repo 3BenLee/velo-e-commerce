@@ -69,10 +69,6 @@ class ButtonAppBar extends Component {
             </Button>
 
             <SimpleModalWrapped open={this.state.open} handleClose={this.handleClose} />
-            {/* <SimpleModalWrapped /> */}
-
-          {/* <SimpleModalWrapped show={this.state.open} /> */}
-            {/* <CartIcon />  */}
           </Toolbar>
         </AppBar>
       </div>
