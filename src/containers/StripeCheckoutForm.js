@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
+import { connect } from 'react-redux';
+import getTotal from '../helpers/getTotal';
 
 const FIREBASE_FUNCTION = 'https://us-central1-velo-velo.cloudfunctions.net/charge/';
 
@@ -29,23 +31,23 @@ class CheckoutForm extends Component {
   state = {
     complete: false
   }
-
+  // User clicked submit
   async submit(ev) {
-    // User clicked submit
-    let {token} = await this.props.stripe.createToken({name: "Name"});
+    const {token} = await this.props.stripe.createToken({name: "Name"});
     // let response = await fetch("https://us-central1-velo-velo.cloudfunctions.net/charge", {
     //   method: "POST",
     //   headers: {"Content-Type": "text/plain"},
     //   body: token.id
     // });
-    const amount = 100; // TODO: replace with form data
+    const total = getTotal(this.props.cartItems);
+    const amount = total; // TODO: replace with form data
     const currency = 'USD';
-    let response = await charge(token, amount, currency);
+    const response = await charge(token, amount, currency);
   
     // if (response.ok) console.log("Purchase Complete!");
     // if (response.ok) this.setState({complete: true});
-    if (response.headers.statusCode === 200) {
-      console.log("Purchase Complete!");
+    if (response.statusCode === 200) {
+      console.log(response);
     } else {
       console.error("error: ", response);
     }
@@ -54,12 +56,10 @@ class CheckoutForm extends Component {
   }
 
   render() {
-
     if (this.state.complete) return <h1>Purchase Complete</h1>;
 
     return (
       <div className="checkout">
-        <p>Would you like to complete the purchase?</p>
         <CardElement />
         <button onClick={this.submit}>Send</button>
       </div>
@@ -67,4 +67,10 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm);
+const mapStateToProps = state => {
+  return {
+    cartItems: state.shoppingCart.cartItems
+  }
+}
+
+export default connect(mapStateToProps)(injectStripe(CheckoutForm));

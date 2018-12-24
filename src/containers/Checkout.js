@@ -7,7 +7,8 @@ class Checkout extends Component {
     return (
       <StripeProvider apiKey="pk_test_CewE8OaDETzJ42CKRkUZfobf">
         <div className="example">
-          <h1>React Stripe Elements Example</h1>
+          <h1>Checkout</h1>
+          <input placeholder="Cardholder"></input>
           <Elements>
             <CheckoutForm />
           </Elements>
