@@ -1,7 +1,38 @@
 import React, {Component} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import { CardElement, injectStripe } from 'react-stripe-elements';
+// import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
+// import { Card } from 'material-ui';
+
+const createOptions = (style) => {
+  return {
+    style: {
+      base: {
+        style,
+        color: 'blue',
+        width: '60px',
+        display: 'block',
+        letterSpacing: '0.025em',
+        fontFamily: 'Source Code Pro, monospace',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#9e2146',
+      },
+    },
+  };
+};
+
+const styles = {
+  card: {
+    position: 'relative',
+    width: '100%',
+    color: 'green'
+  }
+}
 
 const FIREBASE_FUNCTION = 'https://us-central1-velo-velo.cloudfunctions.net/charge/';
 
@@ -31,6 +62,7 @@ class CheckoutForm extends Component {
   state = {
     complete: false
   }
+
   // User clicked submit
   async submit(ev) {
     const {token} = await this.props.stripe.createToken({name: "Name"});
@@ -47,7 +79,7 @@ class CheckoutForm extends Component {
     // if (response.ok) console.log("Purchase Complete!");
     // if (response.ok) this.setState({complete: true});
     if (response.statusCode === 200) {
-      console.log(response);
+      console.log('200!!',response);
     } else {
       console.error("error: ", response);
     }
@@ -59,9 +91,10 @@ class CheckoutForm extends Component {
     if (this.state.complete) return <h1>Purchase Complete</h1>;
 
     return (
-      <div className="checkout">
-        <CardElement />
-        <button onClick={this.submit}>Send</button>
+      <div style={styles.card} className="checkout">
+        {/* <CardElement {...createOptions(this.props.fontSize)}/>        */}
+        <CardElement {...createOptions()}/>
+        <button onClick={this.submit}>Submit Payment</button>
       </div>
     );
   }

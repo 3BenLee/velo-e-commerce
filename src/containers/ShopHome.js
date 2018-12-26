@@ -21,7 +21,7 @@ class ShopHome extends Component {
     this.props.onInitMerch();
   }
 
-  ShowItemDetailHandler = (id) => {
+  showItemDetailHandler = (id) => {
     // console.log("*",id);
     this.props.onInitUniqueMerch(id);
     this.props.history.push(`detail/${this.props.id}`)
@@ -39,7 +39,7 @@ class ShopHome extends Component {
             price={card.price}
             image={card.img} 
             description={card.description}
-            clicked={() => this.ShowItemDetailHandler(card.id)}
+            clicked={() => this.showItemDetailHandler(card.id)}
             />
           </Link>
         ) )

@@ -178,8 +178,8 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModalWrapped));
 
