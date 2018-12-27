@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { CardElement, injectStripe } from 'react-stripe-elements';
+import { CardElement, injectStripe, } from 'react-stripe-elements';
 // import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
+// import { FullscreenExit } from 'material-ui-icons';
 // import { Card } from 'material-ui';
 
-const card = {
+const cardElement = {
   base: {
     color: '#32325d',
     width: '50%',
@@ -29,6 +30,29 @@ const styles = {
   checkoutTitle: {
     marginBottom: '30px'
   },
+  unorderedList: {
+    margin: '0 auto',
+    width: '90%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    listStyleType: 'none',
+    padding: '0'
+  },
+  // lineItemNames: {
+  //   width: '50%'
+  // },
+  nameInputs: {
+    display: 'inline-block',
+    width: '100%',
+    border: '2px solid #aab7c4',
+    borderRadius: '6px',
+  },
+  // addressInputs: {
+  //   display: 'inline-block',
+  //   width: '50%',
+  //   border: '2px solid #aab7c4',
+  //   borderRadius: '6px',
+  // },
   cardElement: {
     width: '50%',
     margin: 'auto',
@@ -100,8 +124,29 @@ class CheckoutForm extends Component {
     return (
       <div style={styles.wrapper}>
         <h1 style={styles.checkoutTitle}>Checkout</h1>
+        <ul style={styles.unorderedList}>
+          <li style={styles.lineItemNames}>
+            <input type="text" style={styles.nameInputs} name="firstname" placeholder="first name"></input>
+          </li>
+            <input type="text" style={styles.nameInputs} name="lastname" placeholder="last name"></input>
+          <li style={styles.lineItemNames}>
+            <input type="text" style={styles.addressInputs} name="address" placeholder="street address"></input>
+          </li>
+          <li>
+            <input type="text" style={styles.addressInputs} name="city" placeholder="city"></input>
+          </li>
+          <li>
+            <input type="text" style={styles.addressInputs} name="state" placeholder="state"></input>
+          </li>
+          <li>
+            <input type="text" style={styles.addressInputs} name="state" placeholder="state"></input>
+          </li>
+          <li>
+            <input type="text" style={styles.addressInputs} name="zip code" placeholder="zip code"></input>
+          </li>
+        </ul>
         <div style={styles.cardElement}>
-          <CardElement style={card}/>
+          <CardElement style={cardElement}/>
         </div>
         <button style={styles.button} onClick={this.submit}>Submit Payment</button>
       </div>
