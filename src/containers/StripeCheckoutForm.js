@@ -5,32 +5,39 @@ import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
 // import { Card } from 'material-ui';
 
-const createOptions = (style) => {
-  return {
-    style: {
-      base: {
-        style,
-        color: 'blue',
-        width: '60px',
-        display: 'block',
-        letterSpacing: '0.025em',
-        fontFamily: 'Source Code Pro, monospace',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
-      },
-      invalid: {
-        color: '#9e2146',
-      },
-    },
-  };
+const card = {
+  base: {
+    color: '#32325d',
+    width: '50%',
+    lineHeight: '30px',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '25px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
 };
-
 const styles = {
-  card: {
-    position: 'relative',
-    width: '100%',
-    color: 'green'
+  wrapper: {
+    textAlign: 'center'
+  },
+  checkoutTitle: {
+    marginBottom: '30px'
+  },
+  cardElement: {
+    width: '50%',
+    margin: 'auto',
+    border: '2px solid #aab7c4',
+    borderRadius: '6px'
+  },
+  button: {
+    display: 'inline-block',
+    margin: '30px auto 0 auto'
   }
 }
 
@@ -91,10 +98,12 @@ class CheckoutForm extends Component {
     if (this.state.complete) return <h1>Purchase Complete</h1>;
 
     return (
-      <div style={styles.card} className="checkout">
-        {/* <CardElement {...createOptions(this.props.fontSize)}/>        */}
-        <CardElement {...createOptions()}/>
-        <button onClick={this.submit}>Submit Payment</button>
+      <div style={styles.wrapper}>
+        <h1 style={styles.checkoutTitle}>Checkout</h1>
+        <div style={styles.cardElement}>
+          <CardElement style={card}/>
+        </div>
+        <button style={styles.button} onClick={this.submit}>Submit Payment</button>
       </div>
     );
   }

@@ -16,7 +16,8 @@ class App extends Component {
 
   render() {
     return (
-      <div style={styles.pageWrapper}>
+      // <div style={styles.pageWrapper}>
+        <div>
         <ButtonAppBar />
         <Route exact path="/" component={ShopHome} />
         <Route exact path="/detail/:id" component={ItemDetailView} />
