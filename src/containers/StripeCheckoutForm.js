@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import { CardElement, injectStripe, } from 'react-stripe-elements';
+import { CardElement, injectStripe } from 'react-stripe-elements';
 // import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
-// import { FullscreenExit } from 'material-ui-icons';
-// import { Card } from 'material-ui';
+import {
+  Container, Col, Form,
+  FormGroup, Input
+} from 'reactstrap';
 
 const cardElement = {
   base: {
@@ -13,7 +15,7 @@ const cardElement = {
     lineHeight: '30px',
     fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
     fontSmoothing: 'antialiased',
-    fontSize: '25px',
+    fontSize: '18px',
     '::placeholder': {
       color: '#aab7c4'
     }
@@ -23,45 +25,29 @@ const cardElement = {
     iconColor: '#fa755a'
   }
 };
+
 const styles = {
   wrapper: {
-    textAlign: 'center'
-  },
-  checkoutTitle: {
-    marginBottom: '30px'
-  },
-  unorderedList: {
-    margin: '0 auto',
-    width: '90%',
     display: 'flex',
     flexWrap: 'wrap',
-    listStyleType: 'none',
-    padding: '0'
+    width: '90%'
   },
-  // lineItemNames: {
-  //   width: '50%'
-  // },
-  nameInputs: {
-    display: 'inline-block',
-    width: '100%',
-    border: '2px solid #aab7c4',
-    borderRadius: '6px',
+  title: {
+    margin: '0 auto'
   },
-  // addressInputs: {
-  //   display: 'inline-block',
-  //   width: '50%',
-  //   border: '2px solid #aab7c4',
-  //   borderRadius: '6px',
-  // },
   cardElement: {
     width: '50%',
     margin: 'auto',
-    border: '2px solid #aab7c4',
+    border: '1px solid #aab7c4',
     borderRadius: '6px'
   },
   button: {
-    display: 'inline-block',
-    margin: '30px auto 0 auto'
+    display: 'block', 
+    margin: '20px auto 0 auto',
+    padding: '6px 10px 7px 10px',
+    borderRadius: '5px',
+    color: 'white',
+    backgroundColor: 'grey',
   }
 }
 
@@ -121,35 +107,78 @@ class CheckoutForm extends Component {
   render() {
     if (this.state.complete) return <h1>Purchase Complete</h1>;
 
-    return (
-      <div style={styles.wrapper}>
-        <h1 style={styles.checkoutTitle}>Checkout</h1>
-        <ul style={styles.unorderedList}>
-          <li style={styles.lineItemNames}>
-            <input type="text" style={styles.nameInputs} name="firstname" placeholder="first name"></input>
-          </li>
-            <input type="text" style={styles.nameInputs} name="lastname" placeholder="last name"></input>
-          <li style={styles.lineItemNames}>
-            <input type="text" style={styles.addressInputs} name="address" placeholder="street address"></input>
-          </li>
-          <li>
-            <input type="text" style={styles.addressInputs} name="city" placeholder="city"></input>
-          </li>
-          <li>
-            <input type="text" style={styles.addressInputs} name="state" placeholder="state"></input>
-          </li>
-          <li>
-            <input type="text" style={styles.addressInputs} name="state" placeholder="state"></input>
-          </li>
-          <li>
-            <input type="text" style={styles.addressInputs} name="zip code" placeholder="zip code"></input>
-          </li>
-        </ul>
+    return ( 
+      <div style={styles.wrapper}> 
+      <Container className="App">
+      <h2 class='text-center'>Let's Checkout</h2>
+      <Form className="form">
+        <Col>
+          <FormGroup>
+            <Input
+              type="first name"
+              name="first name"
+              id="exampleEmail"
+              placeholder="first name"
+            />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <Input
+              type="last name"
+              name="last name"
+              id="exampleEmail"
+              placeholder="last name"
+            />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <Input
+              type="address"
+              name="address"
+              id="exampleEmail"
+              placeholder="address"
+            />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <Input
+              type="city"
+              name="city"
+              id="exampleEmail"
+              placeholder="city"
+            />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <Input
+              type="prefecture"
+              name="prefecture"
+              id="exampleEmail"
+              placeholder="prefecture"
+            />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <Input
+              type="email"
+              name="email"
+              id="exampleEmail"
+              placeholder="myemail@email.com"
+            />
+          </FormGroup>
+        </Col>
         <div style={styles.cardElement}>
-          <CardElement style={cardElement}/>
+        <CardElement style={cardElement}/>
         </div>
-        <button style={styles.button} onClick={this.submit}>Submit Payment</button>
-      </div>
+      </Form>
+    </Container>
+    <button style={styles.button} onClick={this.submit}>Submit</button>
+    </div> 
     );
   }
 }
