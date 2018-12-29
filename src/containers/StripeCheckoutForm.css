@@ -1,0 +1,21 @@
+.checkout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+}
+
+.card-element {
+  width: 50%;
+  margin: auto;
+  border: 1px solid #aab7c4;
+  border-radius: 6px;
+}
+
+.checkout-button {
+  display: block; 
+  margin: 20px auto 0 auto;
+  padding: 6px 10px 7px 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: grey;
+}

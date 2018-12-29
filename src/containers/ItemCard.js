@@ -1,78 +1,29 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 import { withRouter } from 'react-router';
-
-const styles = () => ({
-  card: {
-    // maxWidth: "calc(100% - 40px)",
-    marginTop: 100,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  media: {
-    height: '40vh',
-    paddingTop: '56.25%', // 16:9
-  },
-  // actions: {
-  //   display: 'flex',
-  // }
-});
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle } from 'reactstrap';
+import './ItemCard.css';
 
 class ItemCard extends Component {
 
   render() {
     
-    const { classes } = this.props;
-
     return (
-      <Card 
-        className={classes.card}
-        onClick={this.props.clicked}
-        >
-        <CardHeader
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={this.props.title}
-        />
-        <CardMedia
-          className={classes.media}
-          image={this.props.image}
-          title={this.props.title + ' image'}
-        />
-        <CardContent>
-          <Typography component="p">
-            {this.props.description}
-          </Typography>
-          <Typography component="p">
-            ${this.props.price}
-          </Typography>
-        </CardContent>
+    <div>
+      <Card className="card-style" onClick={this.props.clicked}>
+        <CardImg top width="100%" src={this.props.image} alt="Card image cap" />
+        <CardBody>
+          <CardTitle >{this.props.title}</CardTitle>
+          <CardSubtitle>${this.props.price}</CardSubtitle>
+          <CardText>{this.props.description}</CardText>
+        </CardBody>
       </Card>
+    </div>
     );
   }
 }
 
-ItemCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// style={{width: 20 + 'rem' }}
 
-// const mapStateToProps = () => {
-//   return {
-   
-//   }
-// }
-
-export default (withRouter(withStyles(styles)(ItemCard)));
+export default withRouter(ItemCard);
 

@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { CardDeck } from 'reactstrap';
 import { fetchMerch } from '../actions/fetchMerchAction';
 import { fetchUniqueMerch } from '../actions/fetchUniqueMerchAction';
 import ItemCard from './ItemCard';
 import shortid from 'shortid';
-//import classes from '*.module.scss';
-
-const styles = {
-  wrapper: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-between"
-  } 
-}
+import './ShopHome.css';
 
 class ShopHome extends Component {
 
@@ -28,26 +21,29 @@ class ShopHome extends Component {
   }
   
   render() {
+    
     let cards;
     if ( this.props.cards ) {
-        cards = Object.values(this.props.cards).map( card => (
-          <Link to={'/detail/' + card.id + card.key} key={`div-${shortid.generate()}`}>
-            <ItemCard 
-            key={card.id + shortid.generate()} 
-            id={card.id} 
-            title={card.title}
-            price={card.price}
-            image={card.img} 
-            description={card.description}
-            clicked={() => this.showItemDetailHandler(card.id)}
-            />
-          </Link>
-        ) )
-    }
-    return (
-      <div style={styles.wrapper}>
-        {cards}
-      </div>
+      cards = Object.values(this.props.cards).map( card => (
+        <Link to={'/detail/' + card.id } key={`div-${shortid.generate()}`}>
+            
+              <ItemCard 
+                key={card.id} 
+                id={card.id} 
+                title={card.title}
+                price={card.price}
+                image={card.img} 
+                description={card.description}
+                clicked={() => this.showItemDetailHandler(card.id)}
+              />
+        </Link>
+        ) 
+      )
+    };
+    return ( 
+        <CardDeck className="card-deck">
+          {cards}
+        </CardDeck>     
     );
   }
 }
@@ -59,7 +55,6 @@ const mapStateToProps = state => {
     cards: state.data.cardData,
     id: state.data.cardData
   };
-
 }
 
 const mapDispatchToProps = dispatch => {
@@ -67,7 +62,6 @@ const mapDispatchToProps = dispatch => {
     onInitMerch: () => dispatch(fetchMerch()),
     onInitUniqueMerch: (id) => dispatch(fetchUniqueMerch(id))
   };
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopHome);

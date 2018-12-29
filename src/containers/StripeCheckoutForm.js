@@ -3,10 +3,8 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 // import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
-import {
-  Container, Col, Form,
-  FormGroup, Input
-} from 'reactstrap';
+import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
+import './StripeCheckoutForm.css';
 
 const cardElement = {
   base: {
@@ -26,30 +24,30 @@ const cardElement = {
   }
 };
 
-const styles = {
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    width: '90%'
-  },
-  title: {
-    margin: '0 auto'
-  },
-  cardElement: {
-    width: '50%',
-    margin: 'auto',
-    border: '1px solid #aab7c4',
-    borderRadius: '6px'
-  },
-  button: {
-    display: 'block', 
-    margin: '20px auto 0 auto',
-    padding: '6px 10px 7px 10px',
-    borderRadius: '5px',
-    color: 'white',
-    backgroundColor: 'grey',
-  }
-}
+// const styles = {
+//   wrapper: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//     width: '90%'
+//   },
+//   title: {
+//     margin: '0 auto'
+//   },
+//   cardElement: {
+//     width: '50%',
+//     margin: 'auto',
+//     border: '1px solid #aab7c4',
+//     borderRadius: '6px'
+//   },
+//   button: {
+//     display: 'block', 
+//     margin: '20px auto 0 auto',
+//     padding: '6px 10px 7px 10px',
+//     borderRadius: '5px',
+//     color: 'white',
+//     backgroundColor: 'grey',
+//   }
+// }
 
 const FIREBASE_FUNCTION = 'https://us-central1-velo-velo.cloudfunctions.net/charge/';
 
@@ -108,7 +106,7 @@ class CheckoutForm extends Component {
     if (this.state.complete) return <h1>Purchase Complete</h1>;
 
     return ( 
-      <div style={styles.wrapper}> 
+      <div className="checkout-wrapper"> 
       <Container className="App">
       <h2 class='text-center'>Let's Checkout</h2>
       <Form className="form">
@@ -172,12 +170,13 @@ class CheckoutForm extends Component {
             />
           </FormGroup>
         </Col>
-        <div style={styles.cardElement}>
+        <div className="card-element">
+        {/* <CardElement style={cardElement}/> */}
         <CardElement style={cardElement}/>
         </div>
       </Form>
     </Container>
-    <button style={styles.button} onClick={this.submit}>Submit</button>
+    <button className="checkout-button" onClick={this.submit}>Submit</button>
     </div> 
     );
   }
