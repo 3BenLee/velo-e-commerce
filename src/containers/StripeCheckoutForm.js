@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
-// import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import getTotal from '../helpers/getTotal';
 import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
@@ -23,31 +22,6 @@ const cardElement = {
     iconColor: '#fa755a'
   }
 };
-
-// const styles = {
-//   wrapper: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//     width: '90%'
-//   },
-//   title: {
-//     margin: '0 auto'
-//   },
-//   cardElement: {
-//     width: '50%',
-//     margin: 'auto',
-//     border: '1px solid #aab7c4',
-//     borderRadius: '6px'
-//   },
-//   button: {
-//     display: 'block', 
-//     margin: '20px auto 0 auto',
-//     padding: '6px 10px 7px 10px',
-//     borderRadius: '5px',
-//     color: 'white',
-//     backgroundColor: 'grey',
-//   }
-// }
 
 const FIREBASE_FUNCTION = 'https://us-central1-velo-velo.cloudfunctions.net/charge/';
 
@@ -81,18 +55,11 @@ class CheckoutForm extends Component {
   // User clicked submit
   async submit(ev) {
     const {token} = await this.props.stripe.createToken({name: "Name"});
-    // let response = await fetch("https://us-central1-velo-velo.cloudfunctions.net/charge", {
-    //   method: "POST",
-    //   headers: {"Content-Type": "text/plain"},
-    //   body: token.id
-    // });
     const total = getTotal(this.props.cartItems);
     const amount = total; // TODO: replace with form data
     const currency = 'USD';
     const response = await charge(token, amount, currency);
-  
-    // if (response.ok) console.log("Purchase Complete!");
-    // if (response.ok) this.setState({complete: true});
+
     if (response.statusCode === 200) {
       console.log('200!!',response);
     } else {
@@ -103,81 +70,92 @@ class CheckoutForm extends Component {
   }
 
   render() {
-    if (this.state.complete) return <h1>Purchase Complete</h1>;
+
+    if (this.state.complete) return <h1 className="purchase-complete">Purchase Complete</h1>;
 
     return ( 
       <div className="checkout-wrapper"> 
       <Container className="App">
-      <h2 class='text-center'>Let's Checkout</h2>
-      <Form className="form">
-        <Col>
-          <FormGroup>
-            <Input
-              type="first name"
-              name="first name"
-              id="exampleEmail"
-              placeholder="first name"
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Input
-              type="last name"
-              name="last name"
-              id="exampleEmail"
-              placeholder="last name"
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Input
-              type="address"
-              name="address"
-              id="exampleEmail"
-              placeholder="address"
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Input
-              type="city"
-              name="city"
-              id="exampleEmail"
-              placeholder="city"
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Input
-              type="prefecture"
-              name="prefecture"
-              id="exampleEmail"
-              placeholder="prefecture"
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <Input
-              type="email"
-              name="email"
-              id="exampleEmail"
-              placeholder="myemail@email.com"
-            />
-          </FormGroup>
-        </Col>
-        <div className="card-element">
-        {/* <CardElement style={cardElement}/> */}
-        <CardElement style={cardElement}/>
-        </div>
-      </Form>
-    </Container>
-    <button className="checkout-button" onClick={this.submit}>Submit</button>
-    </div> 
+        <h2 class='text-center'>Let's Checkout</h2>
+          <Form className="form">
+            <Col>
+              <FormGroup>
+                <Input
+                  type="first name"
+                  name="first name"
+                  id="exampleEmail"
+                  placeholder="first name"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="last name"
+                  name="last name"
+                  id="exampleEmail"
+                  placeholder="last name"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="address"
+                  name="address"
+                  id="exampleEmail"
+                  placeholder="address"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="city"
+                  name="city"
+                  id="exampleEmail"
+                  placeholder="city"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="prefecture"
+                  name="prefecture"
+                  id="exampleEmail"
+                  placeholder="prefecture"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="zipcode"
+                  name="zipcode"
+                  id="exampleEmail"
+                  placeholder="zipcode"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  type="email"
+                  name="email"
+                  id="exampleEmail"
+                  placeholder="myemail@email.com"
+                />
+              </FormGroup>
+            </Col>
+            <div className="card-element">
+            {/* <CardElement style={cardElement}/> */}
+            <CardElement style={cardElement}/>
+            </div>
+          </Form>
+        <button className="checkout-button" onClick={this.submit}>Submit</button>
+      </Container>
+      </div> 
     );
   }
 }

@@ -1,12 +1,26 @@
+.purchase-complete {
+  margin: 0 auto;
+}
+
 .checkout-wrapper {
   display: flex;
   flex-wrap: wrap;
-  width: 90%;
+  width: 100%;
+}
+
+.App {
+  margin: 0 auto;
+}
+
+.form {
+  width: 50%;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .card-element {
-  width: 50%;
-  margin: auto;
+  width: 80%;
+  margin:  0 auto;
   border: 1px solid #aab7c4;
   border-radius: 6px;
 }
