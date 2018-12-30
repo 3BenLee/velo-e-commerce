@@ -33,17 +33,22 @@ class ButtonAppBar extends Component {
     super(props)
 
     this.handleOpen = this.handleOpen.bind(this)
+    this.toggle = this.toggle.bind(this)
   }
-  // state = {
-  //   open: false,
-  // }
+  state = {
+    open: false,
+  }
 
+    toggle = () => {
+    this.setState({
+      open:!this.state.open 
+    });
+  };
   handleOpen = () => {
-    // console.log("Cart Open", this.state.open);
-    // this.setState({ 
-    //   open: true 
-    // });
-    this.CartModal.showModal()
+    console.log("Cart Open", this.state.open);
+    this.setState({ 
+      open: true 
+    });
   };
 
   handleClose = () => {
@@ -74,7 +79,7 @@ class ButtonAppBar extends Component {
             <SvgIcon onClick={this.handleOpen}>
               <ShoppingCart />
             </SvgIcon>
-            <CartModal ref={(ref) => {this.CartModal = ref}} isOpen={false}/>
+            <CartModal open={this.state.open} toggle={this.toggle} handleClose={this.handleClose}/>
           </Toolbar>
         </AppBar>
       </div>

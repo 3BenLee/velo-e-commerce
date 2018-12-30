@@ -51,14 +51,14 @@ import Radium from 'radium'
 
 class CartModal extends React.Component {
   
-  constructor (props){
-    super(props)
-    this.state={
-      open: this.props.open,
-    }
-    this.toggle = this.toggle.bind(this)
-    this.showModal = this.showModal.bind(this)
-  }
+  // constructor (props){
+  //   super(props)
+  //   this.state={
+  //     open: this.props.open,
+  //   }
+  //   this.toggle = this.toggle.bind(this)
+  //   this.showModal = this.showModal.bind(this)
+  // }
 
 
   // handleOpen = () => {
@@ -87,22 +87,25 @@ class CartModal extends React.Component {
     })
     return uniqueItems
   };
-  toggle = () => {
-    this.setState({
-      open:!this.state.open 
-    });
-  };
+
+  // toggle = () => {
+  //   this.setState({
+  //     open:!this.state.open 
+  //   });
+  // };
+
   removeFromCartHandler = (cartItem) => {
     this.props.onRemove(cartItem)
     console.log("RemoveHandler", cartItem)
     //console.log("RemoveHandler",id)
   }
-  showModal = () => {
-    console.log("Cart Open", this.state.open);
-    this.setState({ 
-      open: true 
-    });
-  }
+
+  // showModal = () => {
+  //   console.log("Cart Open", this.state.open);
+  //   this.setState({ 
+  //     open: true 
+  //   });
+  // }
 
   render() {
     // const { classes } = this.props;
@@ -114,8 +117,8 @@ class CartModal extends React.Component {
       items = finalUniqueItems.map( merch => (
         <tr key={merch.id} >
           <td>{merch.title}</td>
-          <td>{merch.price}</td>
           <td>{merch.quantity}</td>
+          <td>{merch.price}</td>
           <td>
           <Button 
             className="remove-button "
@@ -130,15 +133,12 @@ class CartModal extends React.Component {
     if ( this.props.cartItems ) {
       total = getTotalHelper(this.props.cartItems)
     }
-    
-    // isOpen={this.props.modal} 
-    // toggle={this.toggle}
 
     return (
       <div>
-        <Modal isOpen={this.state.open} toggle={this.toggle}
+        <Modal isOpen={this.props.open} toggle={this.props.toggle}
           onClose={this.props.handleClose}  className={this.props.className}>
-          <ModalHeader>Modal title</ModalHeader>
+          <ModalHeader>Cart</ModalHeader>
           <ModalBody>
           <Table striped>
             <thead>
@@ -147,13 +147,13 @@ class CartModal extends React.Component {
                 <th>Quantity</th>
                 <th>Price</th>
               </tr>
-              <tr>
-                <td>Total</td>
-                <td>{total}</td>
-              </tr>
             </thead>
               <tbody>
                 {items}
+                <tr>
+                <td>Total</td>
+                <td>{total}</td>
+              </tr>
               </tbody>
             </Table>
           </ModalBody>
@@ -197,10 +197,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps, null, { withRef:true }),
-  Radium
-)
-
-
-export default CartModal
+export default connect(mapStateToProps, mapDispatchToProps)(CartModal);
