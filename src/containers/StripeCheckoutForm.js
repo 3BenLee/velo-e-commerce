@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
-import getTotal from '../helpers/getTotal';
+import getTotal from '../helpers/getTotalHelper';
 import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
 import './StripeCheckoutForm.css';
 

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import SimpleModalWrapped from '../containers/CartModal';
+import CartModal from '../containers/CartModal';
 
 const styles = {
   root: {
@@ -29,17 +29,27 @@ const styles = {
 
 class ButtonAppBar extends Component {
 
-  state = {
-    open: false,
+  constructor (props) {
+    super(props)
+
+    this.handleOpen = this.handleOpen.bind(this)
   }
+  // state = {
+  //   open: false,
+  // }
 
   handleOpen = () => {
-    console.log("Cart Open");
-    this.setState({ open: true });
+    // console.log("Cart Open", this.state.open);
+    // this.setState({ 
+    //   open: true 
+    // });
+    this.CartModal.showModal()
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false 
+    });
   };
 
   render () {
@@ -61,14 +71,10 @@ class ButtonAppBar extends Component {
                 Velo-Velo
               </Typography>
             </Link>
-            
-            <Button onClick={this.handleOpen}>
-              <SvgIcon>
-                <ShoppingCart />
-              </SvgIcon>
-            </Button>
-
-            <SimpleModalWrapped open={this.state.open} handleClose={this.handleClose} />
+            <SvgIcon onClick={this.handleOpen}>
+              <ShoppingCart />
+            </SvgIcon>
+            <CartModal ref={(ref) => {this.CartModal = ref}} isOpen={false}/>
           </Toolbar>
         </AppBar>
       </div>

@@ -12,6 +12,7 @@
     "install": "^0.12.2",
     "lodash": "^4.17.11",
     "npm": "^6.4.1",
+    "radium": "^0.25.1",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.7.0",

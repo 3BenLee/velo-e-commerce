@@ -1,21 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-// import SvgIcon from '@material-ui/core/SvgIcon';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import PropTypes from 'prop-types';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import { Table } from 'reactstrap';
+// import { withStyles } from '@material-ui/core/styles';
+// import Typography from '@material-ui/core/Typography';
+// import Modal from '@material-ui/core/Modal';
+// import Button from '@material-ui/core/Button';
+// // import SvgIcon from '@material-ui/core/SvgIcon';
+// import ShoppingCart from '@material-ui/icons/ShoppingCart';
+// import PropTypes from 'prop-types';
+// import Table from '@material-ui/core/Table';
+// import TableBody from '@material-ui/core/TableBody';
+// import TableCell from '@material-ui/core/TableCell';
+// import TableRow from '@material-ui/core/TableRow';
 import { removeFromCart } from '../actions/removeFromCartAction';
 import { uniqBy } from 'lodash';
-import {REMOVE_FROM_CART} from '../actions/types';
-import getTotal from '../helpers/getTotal';
+// import {REMOVE_FROM_CART} from '../actions/types';
+import getTotalHelper from '../helpers/getTotalHelper';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {compose} from 'redux'
+import Radium from 'radium'
+
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -32,23 +37,29 @@ import getTotal from '../helpers/getTotal';
 //   };
 // }
 
-const styles = theme => ({
-  paper: {
-    position: 'absolute',
-    top: '50%',
-    left: '25%',
-    // width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-  },
-});
+// const styles = theme => ({
+//   paper: {
+//     position: 'absolute',
+//     top: '50%',
+//     left: '25%',
+//     // width: theme.spacing.unit * 50,
+//     backgroundColor: theme.palette.background.paper,
+//     boxShadow: theme.shadows[5],
+//     padding: theme.spacing.unit * 4,
+//   },
+// });
 
-class SimpleModal extends React.Component {
+class CartModal extends React.Component {
   
-  // state={
-  //   open: true,
-  // }
+  constructor (props){
+    super(props)
+    this.state={
+      open: this.props.open,
+    }
+    this.toggle = this.toggle.bind(this)
+    this.showModal = this.showModal.bind(this)
+  }
+
 
   // handleOpen = () => {
   //   this.setState({ open: true });
@@ -58,7 +69,7 @@ class SimpleModal extends React.Component {
   //   this.setState({ open: false });
   // };
 
-  getUniqueItems = () => {
+  getUniqueItemsHandler = () => {
     const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
     const uniqueItems = initailUniqueItemsArray.map( ( uniqueItem ) => {
       const quantity = this.props.cartItems.reduce( ( accumulator, cartItem ) => {
@@ -76,75 +87,83 @@ class SimpleModal extends React.Component {
     })
     return uniqueItems
   };
-
+  toggle = () => {
+    this.setState({
+      open:!this.state.open 
+    });
+  };
   removeFromCartHandler = (cartItem) => {
     this.props.onRemove(cartItem)
     console.log("RemoveHandler", cartItem)
     //console.log("RemoveHandler",id)
   }
+  showModal = () => {
+    console.log("Cart Open", this.state.open);
+    this.setState({ 
+      open: true 
+    });
+  }
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     let items;
     if ( this.props.cartItems ) {
       //console.log('compare!',this.getUniqueItems(), this.props.cartItems)
-      const finalUniqueItems = this.getUniqueItems();
+      const finalUniqueItems = this.getUniqueItemsHandler();
       items = finalUniqueItems.map( merch => (
-        <TableRow key={merch.id} >
-          <TableCell>{merch.title}</TableCell>
-          <TableCell>{merch.price}</TableCell>
-          <TableCell>{merch.quantity}</TableCell>
-          <TableCell>
+        <tr key={merch.id} >
+          <td>{merch.title}</td>
+          <td>{merch.price}</td>
+          <td>{merch.quantity}</td>
+          <td>
           <Button 
-            variant="outlined" 
-            className={classes.button} 
+            className="remove-button "
             onClick={() => this.removeFromCartHandler(merch)} >
             Remove
           </Button>
-          </TableCell>
-        </TableRow>
+          </td>
+        </tr>
       ))}
 
     let total;
     if ( this.props.cartItems ) {
-      total = getTotal(this.props.cartItems)
+      total = getTotalHelper(this.props.cartItems)
     }
+    
+    // isOpen={this.props.modal} 
+    // toggle={this.toggle}
 
     return (
- 
       <div>
-        {/* <Button onClick={this.handleOpen}>
-          <SvgIcon>
-            <ShoppingCart />
-          </SvgIcon>
-        </Button> */}
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.props.open}
-          onClose={this.props.handleClose}
-        >
-          <div className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
-              My Cart
-            </Typography>
-            <Table>
-              <TableBody>
+        <Modal isOpen={this.state.open} toggle={this.toggle}
+          onClose={this.props.handleClose}  className={this.props.className}>
+          <ModalHeader>Modal title</ModalHeader>
+          <ModalBody>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>{total}</td>
+              </tr>
+            </thead>
+              <tbody>
                 {items}
-                <TableRow >
-                  <TableCell>Total</TableCell>
-                  <TableCell>{total}</TableCell>
-                </TableRow>
-            </TableBody>
+              </tbody>
             </Table>
-            <Link to='/checkout'>
-              <Button>
-                Checkout
-              </Button>
-            </Link>
-            <SimpleModalWrapped />
-          </div>
+          </ModalBody>
+          <ModalFooter>
+          <Link to='/checkout'>
+            <Button>
+              Checkout
+            </Button>
+          </Link>
+          </ModalFooter>
         </Modal>
       </div>
     )
@@ -178,8 +197,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const SimpleModalWrapped = withStyles(styles)(SimpleModal);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps, null, { withRef:true }),
+  Radium
+)
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModalWrapped));
-
+export default CartModal
