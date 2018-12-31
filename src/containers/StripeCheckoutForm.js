@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { clearCart } from '../actions/clearCartAction';
 import getTotal from '../helpers/getTotalHelper';
 import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
 import './StripeCheckoutForm.css';
@@ -53,6 +54,11 @@ class CheckoutForm extends Component {
     complete: false
   }
 
+  clearCartHandler = () => {
+    console.log('clearCartHandler');
+    this.props.onClearCart()
+  }
+
   // User clicked submit
   async submit(ev) {
     console.log("clicked!")
@@ -63,8 +69,10 @@ class CheckoutForm extends Component {
     const response = await charge(token, amount, currency);
 
     if (response.statusCode === 200) {
-      this.setState({complete: true})
+      this.setState({complete: true});
       console.log('200!!',response);
+      this.clearCartHandler();
+
     } else {
       alert("wrong credit information")
       console.error("error: ", response);
@@ -74,7 +82,6 @@ class CheckoutForm extends Component {
   render() {
 
     if (this.state.complete) {
-      this.props.cartItems = ''
       return (
         <div>
           <h1 className="purchase-complete">Purchase Complete</h1>
@@ -85,7 +92,6 @@ class CheckoutForm extends Component {
       );
     }
       
-
     return ( 
       <div className="checkout-wrapper"> 
       <Container className="App">
@@ -162,7 +168,6 @@ class CheckoutForm extends Component {
               </FormGroup>
             </Col>
             <div className="card-element">
-            {/* <CardElement style={cardElement}/> */}
             <CardElement style={cardElement}/>
             </div>
           </Form>
@@ -179,4 +184,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(injectStripe(CheckoutForm));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onClearCart: () => dispatch(clearCart())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectStripe(CheckoutForm));
