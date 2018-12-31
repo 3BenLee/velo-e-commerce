@@ -7,13 +7,3 @@ export const addToCart = (card) => dispatch => {
     payload: card
   }) 
 }
-
-// export const test = {
-//   addToCart: (card) => {
-//     console.log('TOTAL', card);
-//     return {
-//       type: ADD_TO_CART,
-//       payload: card
-//     } 
-//   }
-// }

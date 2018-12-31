@@ -1,5 +1,4 @@
 import { FETCH_MERCH } from './types';
-// import axios from 'axios';
 
 export const fetchMerch = () => dispatch => {
   console.log('fetchMerch');

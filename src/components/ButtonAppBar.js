@@ -39,11 +39,12 @@ class ButtonAppBar extends Component {
     open: false,
   }
 
-    toggle = () => {
+  toggle = () => {
     this.setState({
       open:!this.state.open 
     });
   };
+  
   handleOpen = () => {
     console.log("Cart Open", this.state.open);
     this.setState({ 

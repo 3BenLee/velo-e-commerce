@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import getTotal from '../helpers/getTotalHelper';
 import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
 import './StripeCheckoutForm.css';
@@ -54,6 +55,7 @@ class CheckoutForm extends Component {
 
   // User clicked submit
   async submit(ev) {
+    console.log("clicked!")
     const {token} = await this.props.stripe.createToken({name: "Name"});
     const total = getTotal(this.props.cartItems);
     const amount = total; // TODO: replace with form data
@@ -61,22 +63,33 @@ class CheckoutForm extends Component {
     const response = await charge(token, amount, currency);
 
     if (response.statusCode === 200) {
+      this.setState({complete: true})
       console.log('200!!',response);
     } else {
+      alert("wrong credit information")
       console.error("error: ", response);
     }
-
-    if (response.body) this.setState({complete: true});
   }
 
   render() {
 
-    if (this.state.complete) return <h1 className="purchase-complete">Purchase Complete</h1>;
+    if (this.state.complete) {
+      this.props.cartItems = ''
+      return (
+        <div>
+          <h1 className="purchase-complete">Purchase Complete</h1>
+          <Link to='/'>
+            <button>Continue Shopping</button>
+          </Link>
+        </div>
+      );
+    }
+      
 
     return ( 
       <div className="checkout-wrapper"> 
       <Container className="App">
-        <h2 class='text-center'>Let's Checkout</h2>
+        <h2 className='text-center'>Let's Checkout</h2>
           <Form className="form">
             <Col>
               <FormGroup>
@@ -153,7 +166,7 @@ class CheckoutForm extends Component {
             <CardElement style={cardElement}/>
             </div>
           </Form>
-        <button className="checkout-button" onClick={this.submit}>Submit</button>
+        <button className="checkout-button" disabled={false} onClick={this.submit}>Submit</button>
       </Container>
       </div> 
     );
