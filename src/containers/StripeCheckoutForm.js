@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearCart } from '../actions/clearCartAction';
 import getTotal from '../helpers/getTotalHelper';
-import { Container, Col, Form, FormGroup, Input } from 'reactstrap';
+import { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import './StripeCheckoutForm.css';
+import validator from 'validator';
 
 const cardElement = {
   base: {
@@ -51,7 +52,40 @@ class CheckoutForm extends Component {
   }
 
   state = {
-    complete: false
+    paymentComplete: false,
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    prefecture: '',
+    zipCode: '',
+    email: '',
+    submitDisabled: true
+  }
+
+  inputChangeHandler = (event) => {
+    console.log('inputChange', [event.target.name], event.target.value)
+    event.preventDefault()
+    this.setState({
+      [event.target.name]: event.target.value
+    }, console.log(this.state.submitDisabled), function(){ this.canSubmit() })
+  }
+
+  canSubmit = () => {
+    console.log("canSubmit")
+    const { firstName, lastName, address, city, prefecture,zipCode, email} = this.state
+    // if (validator.isAlpha(firstName) 
+    // && validator.isAlpha(lastName) 
+    // && address > 0
+    // && validator.isAlpha(city)
+    // && validator.isAlpha(prefecture)
+    // && zipCode > 0
+    if (validator.isEmail(email)) {
+    // && validator.isEmail(email)) {
+      this.setState({submitDisabled: false})
+    } else {
+      this.setState({submitDisabled: true})
+    }
   }
 
   clearCartHandler = () => {
@@ -69,7 +103,7 @@ class CheckoutForm extends Component {
     const response = await charge(token, amount, currency);
 
     if (response.statusCode === 200) {
-      this.setState({complete: true});
+      this.setState({paymentComplete: true});
       console.log('200!!',response);
       this.clearCartHandler();
 
@@ -100,6 +134,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="first name"
                   name="first name"
                   id="exampleEmail"
@@ -110,6 +145,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="last name"
                   name="last name"
                   id="exampleEmail"
@@ -120,6 +156,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="address"
                   name="address"
                   id="exampleEmail"
@@ -130,6 +167,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="city"
                   name="city"
                   id="exampleEmail"
@@ -140,6 +178,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="prefecture"
                   name="prefecture"
                   id="exampleEmail"
@@ -150,6 +189,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="zipcode"
                   name="zipcode"
                   id="exampleEmail"
@@ -160,6 +200,7 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
+                  onChange= {this.inputChangeHandler}
                   type="email"
                   name="email"
                   id="exampleEmail"
@@ -167,6 +208,7 @@ class CheckoutForm extends Component {
                 />
               </FormGroup>
             </Col>
+            <Button className="save-address-button" disabled={this.state.submitDisabled}>Submit Address</Button>
             <div className="card-element">
             <CardElement style={cardElement}/>
             </div>
