@@ -9,21 +9,19 @@ class ItemCard extends Component {
   render() {
     
     return (
-    <div>
-      <Card className="card-style" onClick={this.props.clicked}>
+      
+      <Card className="text-center item-card" onClick={this.props.clicked} > 
         <CardImg top width="100%" src={this.props.image} alt="Card image cap" />
-        <CardBody>
-          <CardTitle >{this.props.title}</CardTitle>
+        <CardBody className="item-card-body">
+          <CardTitle className="item-card-title">{this.props.title}</CardTitle>
           <CardSubtitle>${this.props.price}</CardSubtitle>
           <CardText>{this.props.description}</CardText>
         </CardBody>
       </Card>
-    </div>
+    
     );
   }
 }
-
-// style={{width: 20 + 'rem' }}
 
 export default withRouter(ItemCard);
 

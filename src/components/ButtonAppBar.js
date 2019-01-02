@@ -6,7 +6,6 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CartModal from '../containers/CartModal';
@@ -35,6 +34,7 @@ class ButtonAppBar extends Component {
     this.handleOpen = this.handleOpen.bind(this)
     this.toggle = this.toggle.bind(this)
   }
+  
   state = {
     open: false,
   }
@@ -59,8 +59,6 @@ class ButtonAppBar extends Component {
   };
 
   render () {
-    // const cartModalIsOpen;
-    //   cartModalIsOpen = this.state.open 
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -77,7 +75,7 @@ class ButtonAppBar extends Component {
                 Velo-Velo
               </Typography>
             </Link>
-            <SvgIcon onClick={this.handleOpen}>
+            <SvgIcon className="shopping-cart"onClick={this.handleOpen}>
               <ShoppingCart />
             </SvgIcon>
             <CartModal open={this.state.open} toggle={this.toggle} handleClose={this.handleClose}/>

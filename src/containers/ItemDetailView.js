@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
+  CardTitle, CardSubtitle } from 'reactstrap';
+// import SvgIcon from '@material-ui/core/SvgIcon';
+// import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import { addToCart } from '../actions/addToCartAction';
 import './ItemDetailView.css';
 
@@ -21,15 +21,16 @@ class ItemDetailView extends Component {
     
     return (
       <div className="detail-view-wrapper">
-        <Card className="detail-view-card" onClick={this.props.clicked}>
+        <Card className= "text-center detail-view-card">
           <CardImg top width="100%" src={"/" + this.props.img} alt={this.props.title} />
           <CardBody>
             <CardTitle >{this.props.title}</CardTitle>
             <CardSubtitle>${this.props.price}</CardSubtitle>
             <CardText>{this.props.description}</CardText>
-            <SvgIcon onClick={() => this.addToCartHandler()} >
+            {/* <SvgIcon className="cart-icon" onClick={() => this.addToCartHandler()} >
               <AddShoppingCart />
-            </SvgIcon>
+            </SvgIcon> */}
+            <button className= "add-to-cart-button" onClick={() => this.addToCartHandler()}>Add To Cart</button>
           </CardBody>
         </Card>
       </div>

@@ -49,6 +49,7 @@ class CheckoutForm extends Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   state = {
@@ -63,25 +64,24 @@ class CheckoutForm extends Component {
     submitDisabled: true
   }
 
-  inputChangeHandler = (event) => {
-    console.log('inputChange', [event.target.name], event.target.value)
+  handleChange = (event, value) => {
+    console.log('inputChange', value, event.target.name)
     event.preventDefault()
     this.setState({
       [event.target.name]: event.target.value
-    }, console.log(this.state.submitDisabled), function(){ this.canSubmit() })
+    }, this.canSubmit)
   }
 
   canSubmit = () => {
-    console.log("canSubmit")
-    const { firstName, lastName, address, city, prefecture,zipCode, email} = this.state
-    // if (validator.isAlpha(firstName) 
-    // && validator.isAlpha(lastName) 
-    // && address > 0
-    // && validator.isAlpha(city)
-    // && validator.isAlpha(prefecture)
-    // && zipCode > 0
-    if (validator.isEmail(email)) {
-    // && validator.isEmail(email)) {
+    console.log("canSubmit", this.state.submitDisabled)
+    const { firstName, lastName, address, city, prefecture, zipCode, email } = this.state
+    if (validator.isAlpha(firstName) 
+    && validator.isAlpha(lastName) 
+    && address !== ''
+    && validator.isAlpha(city)
+    && validator.isAlpha(prefecture)
+    && !validator.isAlpha(zipCode) && zipCode !== ''
+    && validator.isEmail(email)) {
       this.setState({submitDisabled: false})
     } else {
       this.setState({submitDisabled: true})
@@ -98,7 +98,7 @@ class CheckoutForm extends Component {
     console.log("clicked!")
     const {token} = await this.props.stripe.createToken({name: "Name"});
     const total = getTotal(this.props.cartItems);
-    const amount = total; // TODO: replace with form data
+    const amount = total; 
     const currency = 'USD';
     const response = await charge(token, amount, currency);
 
@@ -115,7 +115,7 @@ class CheckoutForm extends Component {
 
   render() {
 
-    if (this.state.complete) {
+    if (this.state.paymentComplete) {
       return (
         <div>
           <h1 className="purchase-complete">Purchase Complete</h1>
@@ -134,9 +134,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="first name"
-                  name="first name"
+                  onChange= {this.handleChange}
+                  type="text"
+                  name={"firstName"}
+                  value={this.state.firstName}
                   id="exampleEmail"
                   placeholder="first name"
                 />
@@ -145,9 +146,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="last name"
-                  name="last name"
+                  onChange= {this.handleChange}
+                  type="text"
+                  name="lastName"
+                  value={this.state.lastName}
                   id="exampleEmail"
                   placeholder="last name"
                 />
@@ -156,9 +158,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="address"
+                  onChange= {this.handleChange}
+                  type="text"
                   name="address"
+                  value={this.state.adress}
                   id="exampleEmail"
                   placeholder="address"
                 />
@@ -167,9 +170,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="city"
+                  onChange= {this.handleChange}
+                  type="text"
                   name="city"
+                  value={this.state.city}
                   id="exampleEmail"
                   placeholder="city"
                 />
@@ -178,9 +182,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="prefecture"
+                  onChange= {this.handleChange}
+                  type="text"
                   name="prefecture"
+                  value={this.state.prefecture}
                   id="exampleEmail"
                   placeholder="prefecture"
                 />
@@ -189,9 +194,10 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="zipcode"
-                  name="zipcode"
+                  onChange= {this.handleChange}
+                  type="text"
+                  name="zipCode"
+                  value={this.state.zipCode}
                   id="exampleEmail"
                   placeholder="zipcode"
                 />
@@ -200,20 +206,21 @@ class CheckoutForm extends Component {
             <Col>
               <FormGroup>
                 <Input
-                  onChange= {this.inputChangeHandler}
-                  type="email"
+                  onChange= {this.handleChange}
+                  type="text"
                   name="email"
+                  value={this.state.email}
                   id="exampleEmail"
                   placeholder="myemail@email.com"
                 />
               </FormGroup>
             </Col>
-            <Button className="save-address-button" disabled={this.state.submitDisabled}>Submit Address</Button>
+            {/* <Button className="save-address-button" disabled={this.state.submitDisabled}>Submit Address</Button> */}
             <div className="card-element">
-            <CardElement style={cardElement}/>
+            <CardElement style={cardElement} />
             </div>
           </Form>
-        <button className="checkout-button" disabled={false} onClick={this.submit}>Submit</button>
+        <button className="checkout-button" disabled={this.state.submitDisabled} onClick={this.submit}>Submit</button>
       </Container>
       </div> 
     );

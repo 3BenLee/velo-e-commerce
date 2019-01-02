@@ -1,4 +1,18 @@
-.card-style {
+.item-card {
   max-width: 20em;
-  flex: 1
+  flex: 1;
+  color: black;
+}
+
+.item-card :hover {
+  color: black;
+  text-decoration: none !important;
+}
+
+.item-card-title {
+  text-decoration: none !important;
+}
+
+.item-card-title :hover {
+  text-decoration: none !important;
 }
