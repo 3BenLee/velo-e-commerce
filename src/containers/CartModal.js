@@ -6,14 +6,15 @@ import { removeFromCart } from '../actions/removeFromCartAction';
 import { uniqBy } from 'lodash';
 import getTotalHelper from '../helpers/getTotalHelper';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './CartModal.css';
 
 class CartModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // items: []
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     // items: []
+  //   }
+  // }
 
   getUniqueItemsHandler = () => {
     const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
@@ -108,7 +109,12 @@ class CartModal extends React.Component {
                   <Table striped>
                     <thead>
                       <tr>
-                        <th>Please Add Items</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                      </tr>
+                      <tr>
+                        <th className="cart-empty-alert">*Please Add Items*</th>
                       </tr>
                     </thead>
                   </Table>

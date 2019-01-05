@@ -25,7 +25,7 @@ class ShopHome extends Component {
     let cards;
     if ( this.props.cards ) {
       cards = Object.values(this.props.cards).map( card => (
-        <Link to={'/detail/' + card.id } key={`div-${shortid.generate()}`}>
+         <Link className="mt-5" style={{ textDecoration: 'none' }} to={'/detail/' + card.id } key={`div-${shortid.generate()}`}>
             
               <ItemCard 
                 key={card.id} 

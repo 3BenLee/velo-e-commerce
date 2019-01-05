@@ -1,0 +1,13 @@
+.item-added-modal {
+  display: flex;
+  align-content: center;
+}
+
+.item-added-modal-header {
+  color: red;
+  margin: auto;
+}
+
+/* .item-added-modal-h2 {
+  margin: auto;
+} */

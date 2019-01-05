@@ -1,0 +1,9 @@
+.payment-failure-modal {
+  display: flex;
+  align-content: center;
+}
+
+.payment-failure-modal-header {
+  color: red;
+  margin: auto;
+}

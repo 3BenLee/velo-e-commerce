@@ -1,18 +1,20 @@
 .item-card {
+  margin-bottom: 50px;
   max-width: 20em;
   flex: 1;
   color: black;
+  text-decoration: none;
 }
 
 .item-card :hover {
   color: black;
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .item-card-title {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .item-card-title :hover {
-  text-decoration: none !important;
+  text-decoration: none;
 }

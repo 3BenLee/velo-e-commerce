@@ -7,7 +7,9 @@ import getTotal from '../helpers/getTotalHelper';
 import { Container, Col, Form, FormGroup, Input, Button } from 'reactstrap';
 import './StripeCheckoutForm.css';
 import validator from 'validator';
+import PaymentFailureModal from './PaymentFailureModal';
 
+/////// Styles for CardElement from Stripe ///////
 const cardElement = {
   base: {
     color: '#32325d',
@@ -26,6 +28,7 @@ const cardElement = {
   }
 };
 
+/////// Firebase Cloud Functions ///////
 const FIREBASE_FUNCTION = 'https://us-central1-velo-velo.cloudfunctions.net/charge/';
 
 // Function used by all three methods to send the charge data to your Firebase function
@@ -61,8 +64,22 @@ class CheckoutForm extends Component {
     prefecture: '',
     zipCode: '',
     email: '',
-    submitDisabled: true
+    submitDisabled: true,
+    modalOpen: false
   }
+
+  handleOpen = () => {
+    console.log("Cart Open", this.state.modalOpen);
+    this.setState({ 
+      modalOpen: true 
+    },() => {setTimeout(this.handleClose, 3000)});
+  };
+
+  handleClose = () => {
+    this.setState({
+      modalOpen: false 
+    });
+  };
 
   handleChange = (event, value) => {
     console.log('inputChange', value, event.target.name)
@@ -108,23 +125,23 @@ class CheckoutForm extends Component {
       this.clearCartHandler();
 
     } else {
-      alert("wrong credit information")
+      this.handleOpen()
+      // alert("Please Check Card Information")
       console.error("error: ", response);
     }
   }
 
   render() {
-
     if (this.state.paymentComplete) {
       return (
-        <div>
-          <h1 className="purchase-complete">Purchase Complete</h1>
+        <div className="purchase-complete-wrapper">
+          <h1 className="purchase-complete-h1">Purchase Complete</h1>
           <Link to='/'>
-            <button>Continue Shopping</button>
+          <Button className="purchase-complete-button"color="secondary">Continue Shopping</Button>
           </Link>
         </div>
       );
-    }
+    } 
       
     return ( 
       <div className="checkout-wrapper"> 
@@ -222,6 +239,7 @@ class CheckoutForm extends Component {
           </Form>
         <button className="checkout-button" disabled={this.state.submitDisabled} onClick={this.submit}>Submit</button>
       </Container>
+      <PaymentFailureModal open={this.state.modalOpen} toggle={this.toggle} />
       </div> 
     );
   }

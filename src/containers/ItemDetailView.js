@@ -2,17 +2,38 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle } from 'reactstrap';
-// import SvgIcon from '@material-ui/core/SvgIcon';
-// import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import { addToCart } from '../actions/addToCartAction';
 import './ItemDetailView.css';
+import ItemAddedModal from './ItemAddedModal';
+
 
 class ItemDetailView extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      modalOpen: false
+    }
+  };
+
+  handleOpen = () => {
+    console.log("Cart Open", this.state.modalOpen);
+    this.setState({ 
+      modalOpen: true 
+    },() => {setTimeout(this.handleClose, 3000)});
+  };
+
+  handleClose = () => {
+    this.setState({
+      modalOpen: false 
+    });
+  };
 
   addToCartHandler = () => {
     this.props.addToCart(this.props.card);
-    console.log('++', this.props.quantity);
-  }
+    console.log('addToCart++', this.props.quantity);
+    this.handleOpen();
+  };
 
   render() {
     if (!this.props.title) {
@@ -21,10 +42,11 @@ class ItemDetailView extends Component {
     
     return (
       <div className="detail-view-wrapper">
-        <Card className= "text-center detail-view-card">
-          <CardImg top width="100%" src={"/" + this.props.img} alt={this.props.title} />
+        <Card className="text-center detail-view-card">
+          {/* <CardImg top width="100%" src={"/" + this.props.img} alt={this.props.title} /> */}
+          <CardImg className="detail-view-img" top width="100%" src={"/" + this.props.img} alt={this.props.title} />
           <CardBody>
-            <CardTitle >{this.props.title}</CardTitle>
+            <CardTitle className={"card-title"}>{this.props.title}</CardTitle>
             <CardSubtitle>${this.props.price}</CardSubtitle>
             <CardText>{this.props.description}</CardText>
             {/* <SvgIcon className="cart-icon" onClick={() => this.addToCartHandler()} >
@@ -33,6 +55,7 @@ class ItemDetailView extends Component {
             <button className= "add-to-cart-button" onClick={() => this.addToCartHandler()}>Add To Cart</button>
           </CardBody>
         </Card>
+        <ItemAddedModal open={this.state.modalOpen} toggle={this.toggle} />
       </div>
     );
   }
