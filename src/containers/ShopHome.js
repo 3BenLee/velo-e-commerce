@@ -25,25 +25,24 @@ class ShopHome extends Component {
     let cards;
     if ( this.props.cards ) {
       cards = Object.values(this.props.cards).map( card => (
-         <Link className="mt-5" style={{ textDecoration: 'none' }} to={'/detail/' + card.id } key={`div-${shortid.generate()}`}>
-            
-              <ItemCard 
-                key={card.id} 
-                id={card.id} 
-                title={card.title}
-                price={card.price}
-                image={card.img} 
-                description={card.description}
-                clicked={() => this.showItemDetailHandler(card.id)}
-              />
+        <Link className="mt-5" style={{ textDecoration: 'none' }} to={'/detail/' + card.id } key={`div-${shortid.generate()}`}> 
+          <ItemCard 
+            key={card.id} 
+            id={card.id} 
+            title={card.title}
+            price={card.price}
+            image={card.img} 
+            description={card.description}
+            clicked={() => this.showItemDetailHandler(card.id)}
+          />
         </Link>
         ) 
       )
     };
     return ( 
-        <CardDeck className="card-deck">
-          {cards}
-        </CardDeck>     
+      <CardDeck className="card-deck justify-content-center">
+        {cards}  
+      </CardDeck>     
     );
   }
 }
