@@ -1,10 +1,11 @@
-.card-deck {
+/* .card-deck {
   display: flex;
   flex-direction: row;
   width: 90%;
   margin: 70px auto 0 auto;
-  justify-content: center space-between; 
-}
+  justify-content: center space-between;
+}  */
+
 .item-card-title {
   text-decoration: none;
 }
