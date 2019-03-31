@@ -17,7 +17,6 @@ class ItemDetailView extends Component {
   };
 
   handleOpen = () => {
-    console.log("Cart Open", this.state.modalOpen);
     this.setState({ 
       modalOpen: true 
     },() => {setTimeout(this.handleClose, 3000)});
@@ -31,7 +30,6 @@ class ItemDetailView extends Component {
 
   addToCartHandler = () => {
     this.props.addToCart(this.props.card);
-    console.log('addToCart++', this.props.quantity);
     this.handleOpen();
   };
 
@@ -43,15 +41,11 @@ class ItemDetailView extends Component {
     return (
       <div className="detail-view-wrapper">
         <Card className="text-center detail-view-card">
-          {/* <CardImg top width="100%" src={"/" + this.props.img} alt={this.props.title} /> */}
           <CardImg className="detail-view-img" top width="100%" src={"/" + this.props.img} alt={this.props.title} />
           <CardBody>
             <CardTitle className={"card-title"}>{this.props.title}</CardTitle>
             <CardSubtitle>${this.props.price}</CardSubtitle>
             <CardText>{this.props.description}</CardText>
-            {/* <SvgIcon className="cart-icon" onClick={() => this.addToCartHandler()} >
-              <AddShoppingCart />
-            </SvgIcon> */}
             <button className= "add-to-cart-button" onClick={() => this.addToCartHandler()}>Add To Cart</button>
           </CardBody>
         </Card>

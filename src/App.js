@@ -12,7 +12,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <ButtonAppBar /> */}
         <ShopNavbar />
         <Route exact path="/" component={ShopHome} />
         <Route exact path="/detail/:id" component={ItemDetailView} />

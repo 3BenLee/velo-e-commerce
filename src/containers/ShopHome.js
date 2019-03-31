@@ -15,9 +15,9 @@ class ShopHome extends Component {
   }
 
   showItemDetailHandler = (id) => {
-    // console.log("*",id);
     this.props.onInitUniqueMerch(id);
     this.props.history.push(`detail/${this.props.id}`)
+    console.log('history', this.props.history)
   }
   
   render() {
@@ -39,6 +39,7 @@ class ShopHome extends Component {
         ) 
       )
     };
+
     return ( 
       <CardDeck className="card-deck justify-content-center">
         {cards}  
@@ -48,8 +49,6 @@ class ShopHome extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log("map props to state")
-  // console.log("----->",state.data.cardData)
   return {
     cards: state.data.cardData,
     id: state.data.cardData

@@ -26,7 +26,6 @@ class ShopNavbar extends React.Component {
   };
   
   handleOpen = () => {
-    console.log("Cart Open", this.state.modalOpen);
     this.setState({ 
       modalOpen: true 
     });
@@ -39,7 +38,6 @@ class ShopNavbar extends React.Component {
   };
 
   render () {
-    // const { classes } = this.props;
     return (
       <div>
       <Navbar className="navbar" light expand="md">

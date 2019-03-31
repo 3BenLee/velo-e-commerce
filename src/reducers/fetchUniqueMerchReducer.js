@@ -8,8 +8,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
       case FETCH_UNIQUE_MERCH:
-        console.log("UNIQUE REDUCER")
-        console.log(action.payload)
         return {
           ...state,
           id: action.payload

@@ -9,19 +9,16 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
     case ADD_TO_CART:
-    console.log('ADD_reducer');
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload],
       }
     case REMOVE_FROM_CART:
-    console.log('REMOVE_REDUCER', action.payload, state.cartItems);
       return {
         ...state,
         cartItems: state.cartItems.filter(item => item.id !== action.payload.id)
       }
     case CLEAR_CART:
-    console.log('CLEAR_REDUCER');
       return {
         ...state,
         cartItems: []

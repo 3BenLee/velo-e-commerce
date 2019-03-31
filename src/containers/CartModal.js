@@ -9,12 +9,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './CartModal.css';
 
 class CartModal extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     // items: []
-  //   }
-  // }
 
   getUniqueItemsHandler = () => {
     const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
@@ -37,8 +31,6 @@ class CartModal extends React.Component {
 
   removeFromCartHandler = (cartItem) => {
     this.props.onRemove(cartItem)
-    console.log("RemoveHandler", cartItem)
-    //console.log("RemoveHandler",id)
   }
 
   render() {
@@ -64,8 +56,6 @@ class CartModal extends React.Component {
     if ( this.props.cartItems ) {
       total = getTotalHelper(this.props.cartItems)
     }
-    console.log("ITEMS,",items);
-    console.log("total",total)
     return (
       <div>
         <Modal isOpen={this.props.open} toggle={this.props.toggle}
@@ -119,10 +109,8 @@ class CartModal extends React.Component {
                     </thead>
                   </Table>
                 </ModalBody>
-            </React.Fragment>
-            
+            </React.Fragment>        
           )}
-
         </Modal>
       </div>
     )
@@ -130,8 +118,6 @@ class CartModal extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("$&",state.card.id)
-  // console.log("----->",state.data.cardData)
   if (!state.data.cardData) {
     return {
       title: null,

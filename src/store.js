@@ -10,7 +10,6 @@ const middleware = [thunk]
 const store = createStore(
   rootReducer, 
   initialState, 
-  // applyMiddleware(...middleware)
   compose (
     applyMiddleware(...middleware),
     window.navigator.userAgent.includes('Chrome') ?
