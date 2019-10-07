@@ -16,34 +16,32 @@ class ShopHome extends Component {
   showItemDetailHandler = id => {
     this.props.onInitUniqueMerch(id);
     this.props.history.push(`detail/${this.props.id}`);
-    console.log("history", this.props.history);
   };
 
   render() {
-    let cards;
-    if (this.props.cards) {
-      cards = Object.values(this.props.cards).map(card => (
-        <Link
-          className="mt-5"
-          style={{ textDecoration: "none" }}
-          to={"/detail/" + card.id}
-          key={`div-${shortid.generate()}`}
-        >
-          <ItemCard
-            key={card.id}
-            id={card.id}
-            title={card.title}
-            price={card.price}
-            image={card.img}
-            description={card.description}
-            clicked={() => this.showItemDetailHandler(card.id)}
-          />
-        </Link>
-      ));
-    }
+    const cards = this.props.cards && Object.values(this.props.cards).map(card => (
+      <Link
+        className="mt-5"
+        style={{ textDecoration: "none" }}
+        to={"/detail/" + card.id}
+        key={`div-${shortid.generate()}`}
+      >
+        <ItemCard
+          key={card.id}
+          id={card.id}
+          title={card.title}
+          price={card.price}
+          image={card.img}
+          description={card.description}
+          clicked={() => this.showItemDetailHandler(card.id)}
+        />
+      </Link>
+    ));
 
     return (
-      <CardDeck className="card-deck justify-content-center">{cards}</CardDeck>
+      <CardDeck className="card-deck justify-content-center">
+        {cards}
+      </CardDeck>
     );
   }
 }
@@ -62,7 +60,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShopHome);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopHome);

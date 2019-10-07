@@ -6,25 +6,24 @@ import { addToCart } from '../actions/addToCartAction';
 import './ItemDetailView.css';
 import ItemAddedModal from './ItemAddedModal';
 
-
 class ItemDetailView extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       modalOpen: false
     }
   };
 
   handleOpen = () => {
-    this.setState({ 
-      modalOpen: true 
+    this.setState({
+      modalOpen: true
     },() => {setTimeout(this.handleClose, 3000)});
   };
 
   handleClose = () => {
     this.setState({
-      modalOpen: false 
+      modalOpen: false
     });
   };
 
@@ -37,14 +36,14 @@ class ItemDetailView extends Component {
     if (!this.props.title) {
       return null;
     }
-    
+
     return (
       <div className="detail-view-wrapper">
         <Card className="text-center detail-view-card">
-          <CardImg className="detail-view-img" top width="100%" src={"/" + this.props.img} alt={this.props.title} />
+          <CardImg className="detail-view-img" top width="100%" src={this.props.img} alt={this.props.title} />
           <CardBody>
             <CardTitle className={"card-title"}>{this.props.title}</CardTitle>
-            <CardSubtitle>${this.props.price}</CardSubtitle>
+            <CardSubtitle>{`$${this.props.price}`}</CardSubtitle>
             <CardText>{this.props.description}</CardText>
             <button className= "add-to-cart-button" onClick={() => this.addToCartHandler()}>Add To Cart</button>
           </CardBody>

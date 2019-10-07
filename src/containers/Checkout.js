@@ -4,7 +4,7 @@ import {Elements, StripeProvider} from 'react-stripe-elements';
 
 class Checkout extends Component {
   render () {
-    return ( 
+    return (
       <div>
         <StripeProvider apiKey="pk_test_CewE8OaDETzJ42CKRkUZfobf">
           <div>
@@ -14,7 +14,7 @@ class Checkout extends Component {
           </div>
         </StripeProvider>
       </div>
-    )
+    );
   }
 }
 

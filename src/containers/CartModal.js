@@ -11,10 +11,11 @@ import './CartModal.css';
 class CartModal extends React.Component {
 
   getUniqueItemsHandler = () => {
-    const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id')
-    const uniqueItems = initailUniqueItemsArray.map( ( uniqueItem ) => {
-      const quantity = this.props.cartItems.reduce( ( accumulator, cartItem ) => {
-        if ( uniqueItem.id === cartItem.id ) {
+    const initailUniqueItemsArray = uniqBy( this.props.cartItems, 'id');
+
+    const uniqueItems = initailUniqueItemsArray.map((uniqueItem) => {
+      const quantity = this.props.cartItems.reduce((accumulator, cartItem) => {
+        if (uniqueItem.id === cartItem.id) {
           accumulator++;
         }
         return accumulator;
@@ -30,12 +31,12 @@ class CartModal extends React.Component {
   };
 
   removeFromCartHandler = (cartItem) => {
-    this.props.onRemove(cartItem)
+    this.props.onRemove(cartItem);
   }
 
   render() {
     let items;
-    if ( this.props.cartItems ) {
+    if (this.props.cartItems) {
       const finalUniqueItems = this.getUniqueItemsHandler();
       items = finalUniqueItems.map( merch => (
         <tr key={merch.id} >
@@ -43,77 +44,77 @@ class CartModal extends React.Component {
           <td>{merch.quantity}</td>
           <td>${merch.price}</td>
           <td>
-          <Button 
-            className="remove-button "
-            onClick={() => this.removeFromCartHandler(merch)} >
-            Remove
-          </Button>
+            <Button
+              className="remove-button "
+              onClick={() => this.removeFromCartHandler(merch)} >
+              Remove
+            </Button>
           </td>
         </tr>
-      ))}
+      ))};
 
     let total;
     if ( this.props.cartItems ) {
       total = getTotalHelper(this.props.cartItems)
-    }
+    };
+    const cartTable = total ? (
+      <>
+        <ModalHeader>Cart</ModalHeader>
+        <ModalBody>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items}
+              <tr>
+                <td></td>
+                <td>Total</td>
+                <td>${total}</td>
+            </tr>
+            </tbody>
+          </Table>
+        </ModalBody>
+        <ModalFooter>
+        <Link to='/checkout'>
+          <Button onClick = {this.props.toggle} >
+            Checkout
+          </Button>
+        </Link>
+        </ModalFooter>
+      </>
+    ) : (
+      <>
+        <ModalHeader>Cart</ModalHeader>
+        <ModalBody>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              <tr>
+                <th className="cart-empty-alert">*Please Add Items*</th>
+              </tr>
+            </thead>
+          </Table>
+        </ModalBody>
+      </>
+    );
+
     return (
       <div>
         <Modal isOpen={this.props.open} toggle={this.props.toggle}
           onClose={this.props.handleClose}  className={this.props.className}>
-          
-          { total ?  
-
-          (<React.Fragment>
-          <ModalHeader>Cart</ModalHeader>
-          <ModalBody>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items}
-                <tr>
-                  <td></td>
-                  <td>Total</td>
-                  <td>${total}</td>
-              </tr>
-              </tbody> 
-            </Table>
-          </ModalBody>
-          <ModalFooter>
-          <Link to='/checkout'>
-            <Button onClick = {this.props.toggle} >
-              Checkout
-            </Button>
-          </Link>
-          </ModalFooter>
-          </React.Fragment> )  : 
-                
-          ( <React.Fragment>
-              <ModalHeader>Cart</ModalHeader>
-                <ModalBody>
-                  <Table striped>
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                      <tr>
-                        <th className="cart-empty-alert">*Please Add Items*</th>
-                      </tr>
-                    </thead>
-                  </Table>
-                </ModalBody>
-            </React.Fragment>        
-          )}
+          {cartTable}
         </Modal>
       </div>
-    )
+    );
   }
 }
 
@@ -125,20 +126,19 @@ const mapStateToProps = state => {
       img: null,
       description: null,
       price: null
-    }
+    };
   }
-
   const card = state.data.cardData[state.card.id]
+
   return {
     card: card,
     cartItems: state.shoppingCart.cartItems,
     id: state.card.id,
-
   };
 }
 const mapDispatchToProps = (dispatch) => {
   return{
-    onRemove: (merch) => dispatch(removeFromCart(merch)) 
+    onRemove: (merch) => dispatch(removeFromCart(merch))
   }
 }
 
