@@ -40,7 +40,7 @@ class ItemDetailView extends Component {
     return (
       <div className="detail-view-wrapper">
         <Card className="text-center detail-view-card">
-          <CardImg className="detail-view-img" top width="100%" src={this.props.img} alt={this.props.title} />
+          <CardImg className="detail-view-img" src={this.props.img} alt={this.props.title} />
           <CardBody>
             <CardTitle className={"card-title"}>{this.props.title}</CardTitle>
             <CardSubtitle>{`$${this.props.price}`}</CardSubtitle>
