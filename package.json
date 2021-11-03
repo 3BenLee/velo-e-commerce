@@ -28,7 +28,7 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.14",
     "stripe": "^6.20.0",
-    "validator": "^10.10.0",
+    "validator": "^13.7.0",
     "yarn": "^1.17.3"
   },
   "scripts": {
